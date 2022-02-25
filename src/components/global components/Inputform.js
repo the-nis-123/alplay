@@ -17,7 +17,9 @@ const Inputform = (props) => {
   }
   
   return (
-   <input onChange={props.onChange} value={props.value} type="text" placeholder={props.placeholder} style={inputStyles}/>
+   <input onChange={props.onChange} value={props.value}
+    type="text" placeholder={props.placeholder} 
+    style={inputStyles} id={props.id}/>
   )
 }
 

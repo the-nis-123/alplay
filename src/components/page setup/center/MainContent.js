@@ -6,6 +6,7 @@ import CurrentPlaylist from "../../modals/CurrentPlaylist";
 import { useSelector } from "react-redux";
 import { css } from "@emotion/css";
 import facepaint from "facepaint";
+import SearchResults from "../../modals/SearchResults";
 
 const MainContent = () => {
 
@@ -33,7 +34,7 @@ const MainContent = () => {
     <div className={wrapperStyles}
     >
       <Wrapper width="95%" height ="calc(100% - 100px)">
-        {playlist? <CurrentPlaylist/> : <AlplayCategoryContainers/>}
+       <SearchResults/>
       </Wrapper>
       <Player/>
     </div>
