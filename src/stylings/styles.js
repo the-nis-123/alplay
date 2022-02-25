@@ -1,0 +1,2 @@
+/* code will be refacored and common shared styles will be defined
+ and exported from here for all the components that use it*/
