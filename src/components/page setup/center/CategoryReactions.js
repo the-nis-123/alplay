@@ -81,11 +81,6 @@ const CategoryReactions = (props) => {
   ///dispatching category actions
   let dispatch = useDispatch();
 
-  let openThisCategory = (e) => {
-    e.stopPropagation();
-    dispatch(playlistButtonPressed());
-  }
-
   let pauseCategory = (e) => {
      e.stopPropagation();
     dispatch(pauseButtonPressed());
@@ -100,7 +95,7 @@ const CategoryReactions = (props) => {
 
 
   return (
-    <div css={wrapperStyles} onDoubleClick={openThisCategory}>
+    <div css={wrapperStyles} >
       <Wrapper display="flex" flexDirection="column" padding="0.625em" position="relative"
       >
         <h4 css={playlistNameStyles}>{props.categoryName}</h4>

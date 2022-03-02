@@ -84,7 +84,7 @@ const audioPlayerReducer = (state=initialAppState, action) => {
     case 'SHOW_CURRENT_PLAYLIST':
       return {
         ...state,
-        showPlaylist:true
+        showPlaylist:true,
       }
     case 'HIDE_CURRENT_PLAYLIST':
       return{

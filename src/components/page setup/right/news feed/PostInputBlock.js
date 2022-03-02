@@ -17,7 +17,7 @@ const PostInputBlock = () => {
     <Wrapper height="40px"  borderRadius="30px"
     display="flex" alignItems="center" 
     >
-      <InputForm width="80% " height="34px" borderRadius="30px" backgroundColor="rgba(3, 61, 0,0.8)"
+      <InputForm width="80% " height="34px" borderRadius="30px" backgroundColor="rgba(10, 61, 0,1)"
        color="#d1b894"  padding="0 10px" placeholder="Send a shout out" 
       />
       <IoMdMic css={iconStyles}/>

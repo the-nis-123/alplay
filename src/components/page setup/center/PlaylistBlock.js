@@ -1,11 +1,14 @@
 /**@jsxImportSource @emotion/react */
 import React, { useEffect, useState } from "react";
 import CategoryReactions from "./CategoryReactions";
-import pic from "../../../media/pic/me.jpg";
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {songCollectionClicked} from "../../../redux/actions/playlistActions";
+
 
 const PlaylistBlock = ({playlistId}) => {
   const [playlist, setPlaylist] = useState(' ');
+  const [songsList, setSongsList] = useState([]);
  
   useEffect(()=>{
     const options = {
@@ -20,6 +23,8 @@ const PlaylistBlock = ({playlistId}) => {
     axios.request(options).then(function (response) {
       let returnedPlaylist = response.data;
       setPlaylist(returnedPlaylist);
+      //console.log(returnedPlaylist);
+      setSongsList(returnedPlaylist.tracks.data);
     }).catch(function (error) {
       console.error(error);
     });
@@ -35,8 +40,10 @@ const PlaylistBlock = ({playlistId}) => {
     justifyContent:'center',
     alignItems: 'center',
     margin: '5px',
-    borderRadius:'10px',
-    background:`linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6)), url(${playlist.picture})`, 
+    borderRadius:'6px',
+    backgroundColor:'rgba(10, 61, 0, 0.8)',
+    padding:'20px',
+    // background:`linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6)), url(${album.cover})`, 
     '&:hover':{
       '#categoryReactions, #playpause':{
        display:'flex'
@@ -44,8 +51,16 @@ const PlaylistBlock = ({playlistId}) => {
     }
   }
 
+  let dispatch = useDispatch();
+
+  
+  let openThisCategory = (e) => {
+    e.stopPropagation();
+    dispatch(songCollectionClicked(songsList));
+  }
+
   return (
-    <div css={categoryStyles}>
+    <div onDoubleClick={openThisCategory} css={categoryStyles}>
       <CategoryReactions description={playlist.description} categoryName={playlist.title}/>
     </div>
   )

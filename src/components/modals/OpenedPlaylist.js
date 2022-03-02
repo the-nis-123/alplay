@@ -8,53 +8,23 @@ import {
   shareThisSong, songInPlaylistDoubleClicked
 } from "../../redux/actions/audioPlayerActions";
 import { css } from "@emotion/css";
-import {useEffect, useState} from "react";
-import axios from "axios";
 import facepaint from "facepaint";
 
 
 
-const SearchResults = () => {
-  const [searchResults, setSearchResults] = useState([]);
+const OpenedPlaylist = () => {
   
-  const searchvalue = useSelector(state => state.searchReducer.searchValue); 
-  
-  useEffect( () => {
-    if(searchvalue){
-        const options = {
-        method: 'GET',
-        url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
-        params: {q: `${searchvalue}`},
-        headers: {
-          'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
-          'x-rapidapi-key': '2ce6541653msh6b3fb4d89eb2d48p1bcea1jsn8ce75a4064a4'
-        }
-      };
-
-      axios.request(options).then((response) => {
-        const returnedData = response.data;
-       if(returnedData.data){
-          setSearchResults(returnedData.data);
-          console.log(returnedData.data);
-       }else{
-          console.log('something went wrong');
-       }
-    }).catch((error) => {
-      console.error(error);
-    })
-  }
-},[searchvalue]);
-
-
-
   const bp = facepaint([
     '@media(min-width: 700px)',
     '@media(min-width: 999px)',
     '@media(min-width: 1000px)'
   ]);
 
-  let chosenPlaylist = useSelector(state=>state.audioPlayerReducer.chosenPlaylist);
-  let currentSong = useSelector(state=>state.audioPlayerReducer.songIndex);
+  let chosenPlaylist = useSelector(state => state.audioPlayerReducer.chosenPlaylist);
+  let currentSong = useSelector(state => state.audioPlayerReducer.songIndex);
+  let songslist = useSelector(state => state.playlistReducer.playlistToShow);
+  
+  console.log(songslist);
 
   const wrapperStyles={
     width:'100%',
@@ -85,9 +55,12 @@ const SearchResults = () => {
   const listContainerStyles = {
     width:'100%',
     height:'calc(100% - 30px)',
-    overflow:'auto',
     opacity:'0.7',
     padding: '0 10px',
+    overflow:'hidden',
+    '&:hover':{
+      overflowY:'scroll',
+    }
   }
 
   const listStyles = css(bp({
@@ -205,13 +178,13 @@ const SearchResults = () => {
       </h3>
       <ul css={listContainerStyles}>
         {
-          searchResults.map(song => 
+          songslist.map(song => 
           <li key={song.id} className={listStyles} 
           onDoubleClick={songDoubleClicked}
           >  
             <div css={title}>
               <span css={numbered}>
-                {searchResults.indexOf(song) + 1}
+                {songslist.indexOf(song) + 1}
               </span>
               <img src={song.album['cover']} alt="" css={songCoverPicStyles} />
               <p>
@@ -238,4 +211,4 @@ const SearchResults = () => {
   )
 }
 
-export default SearchResults;
+export default OpenedPlaylist;

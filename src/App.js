@@ -18,6 +18,7 @@ export const initialAppState = {
   volumeOn:true,
   shuffleButtonOn:false,
   showPlaylist:false,
+  songsCollection:false,
   repeatOneSong:false,
   repeatAllSongs:false,
   repeatOff:true,
@@ -28,7 +29,12 @@ export const initialAppState = {
   playlistComponentIsLoaded:false,
   songTime:'--:--',
   songDuration:'--:--',
-  searchValue:''
+  searchValue:'',
+  homeMenu:true,
+  currentAlbumID:'',
+  currentPlaylistID:'',
+  currentSongID:'',
+  playlistToShow:[]
 }
 
 

@@ -2,9 +2,12 @@
 import React, { useEffect, useState } from "react";
 import CategoryReactions from "./CategoryReactions";
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {songCollectionClicked} from "../../../redux/actions/playlistActions";
 
 const AlbumBlock = ({albumId}) => {
    const [album, setAlbum] = useState(' ');
+   const [songsList, setSongsList] = useState([]);
  
   
 
@@ -21,6 +24,8 @@ const AlbumBlock = ({albumId}) => {
     axios.request(options).then(function (response) {
       let returnedAlbum = response.data;
       setAlbum(returnedAlbum);
+      //console.log(returnedAlbum);
+      setSongsList(returnedAlbum.tracks.data);
     }).catch(function (error) {
       console.error(error);
     });}, [albumId]
@@ -33,8 +38,10 @@ const AlbumBlock = ({albumId}) => {
     display:'flex',
     alignItems: 'center',
     margin: '5px',
-    borderRadius:'10px',
-    background:`linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6)), url(${album.cover})`, 
+    borderRadius:'6px',
+    backgroundColor:'rgba(10, 61, 0, 0.8)',
+    padding:'20px',
+    // background:`linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6)), url(${album.cover})`, 
     '&:hover':{
       '#categoryReactions, #playpause':{
        display:'flex'
@@ -42,8 +49,17 @@ const AlbumBlock = ({albumId}) => {
     }
   }
 
+  let dispatch = useDispatch();
+  
+  let openThisCategory = (e) => {
+    e.stopPropagation();
+    dispatch(songCollectionClicked(songsList));
+  }
+
+
+
   return (
-    <div css={categoryStyles}>
+    <div onDoubleClick={openThisCategory} css={categoryStyles}>
       <CategoryReactions categoryName={album.title}/>
     </div>
   )

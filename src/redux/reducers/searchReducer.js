@@ -5,7 +5,8 @@ const searchReducer = (state=initialAppState, action) => {
     case 'SEARCHING':
       return{
         ...state,
-        searchValue: document.getElementById("main-search").value
+        searchValue: document.getElementById("main-search").value,
+        showPlaylist:false,
       }
   
     default:

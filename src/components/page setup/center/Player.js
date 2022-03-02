@@ -184,8 +184,8 @@ const Player = () => {
               {!shuffleButton && <IoMdShuffle css={playerIconStyles} onClick={shuffleSongs}/>}
             </Wrapper>
             <Wrapper display="flex" justifyContent="center" alignItems="center">
-              {showCurrentPlaylist && <RiPlayListFill css={playerActiveIconStyles} onClick={hidePlaylist}/>}
-              {!showCurrentPlaylist && <RiPlayListFill css={playerIconStyles} onClick={showPlaylist}/>}
+              {showCurrentPlaylist ? <RiPlayListFill css={playerActiveIconStyles} onClick={hidePlaylist}/> :
+              <RiPlayListFill css={playerIconStyles} onClick={showPlaylist}/>}
             </Wrapper>
             <Wrapper display="flex" justifyContent="center" alignItems="center">
               {!volumeOn && <IoMdVolumeMute css={playerIconStyles} onClick={unmuteSong}/> }

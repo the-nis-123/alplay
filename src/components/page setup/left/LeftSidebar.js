@@ -1,5 +1,5 @@
 /**@jsxImportSource @emotion/react */
-import Wrapper from "../../global components/Wrapper";
+import div from "../../global components/Wrapper";
 import EventBlock from "./EventBlock";
 import photo1 from "../../../media/pic/8.jpeg"
 import photo2 from "../../../media/pic/10.jpeg"
@@ -37,16 +37,26 @@ const LeftSidebar = () => {
     padding: '10px',
   }
 
+  const innerWrapper = {
+    overflowY:'scroll',
+    width:"100%",
+    height:"calc(100% - 30px)",
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"flex-start",
+    alignItems:"center",
+    padding:"0 0 10px 10px",
+    margin:"10px 0 10px 0" 
+      
+  }
+
   return (
     <div className={wrapperStyles}
     >
       
       <h3 css={headingStyles}>Upcoming Music Events</h3>
       
-      <Wrapper width="100%" height="calc(100% - 30px)" overflow="auto"  display="flex" 
-        flexDirection="column" justifyContent="flex-start"
-        alignItems="center" padding="0 0 10px 10px"  margin="10px 0 10px 0" 
-      >
+      <div css={innerWrapper} >
         <EventBlock eventPhoto={photo1}/>
         <EventBlock eventPhoto={photo2}/>
         <EventBlock eventPhoto={photo3}/>
@@ -54,7 +64,7 @@ const LeftSidebar = () => {
         <EventBlock eventPhoto={photo5}/>
         <EventBlock eventPhoto={photo6}/>
         <EventBlock eventPhoto={photo7}/>
-      </Wrapper>
+      </div>
     </div>
   )
 }
