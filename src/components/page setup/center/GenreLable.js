@@ -2,17 +2,25 @@
 
 const  GenreLabel = ({genreName}) => {
   const genrename = {
-    padding:'20px',
-    borderRadius:'15px',
-    backgroundColor:'yellow',
-    margin:'10px',
+    width:'105px',
+    height:'60px',
+    padding:'10px',
+    borderRadius:'5px',
+    backgroundColor:"rgba(3, 61, 0,0.8)",
+    margin:'10px 5px',
     color:'red',
-    textAlign:'center'
+    textAlign:'center',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    cursor:'pointer'
   }
 
 
 return (
-    <h2 css={genrename}>{genreName}</h2>
+    <div css={genrename}>
+      <h2>{genreName}</h2>
+    </div>
   );
 }
 

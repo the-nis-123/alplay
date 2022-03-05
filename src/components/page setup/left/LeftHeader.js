@@ -21,14 +21,14 @@ const LeftHeader = () => {
 
 
   const logoStyles = {
-    width:'45px',
-    height:'auto',
-    marginRight:'10px'
+    width:'50px',
+    height:'50px',
+    marginRight:'10px',
   }
 
 
   const appNameStyles = css(bp({
-   color:'lawngreen',
+   color:'#30F284',
    fontSize:['', '1.5rem !important', '1rem'],
    display:['none', 'block', 'block']
   }));

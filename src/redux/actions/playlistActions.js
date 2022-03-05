@@ -28,3 +28,19 @@ export const songInPlaylistDoubleClicked = ()=>{
     }
   }
 }
+
+
+export const playAplaylist = (playlistId)=>{
+  return {
+    type:'LOAD_AND_PLAY_A_PLAYLIST',
+    payload:playlistId
+  }
+}
+
+
+export const playAnAlbum = (albumId)=>{
+  return {
+    type:'LOAD_AND_PLAY_AN_ALBUM',
+    payload:albumId
+  }
+}

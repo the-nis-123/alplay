@@ -1,8 +1,9 @@
 //playlists
  const playlists = [
-   1282483245,1950512362,1964085082,
-   1976454162,1370794195, 1482254815,
-   1999466402,2042023484,2021225582,3925947106
+   1282483245,4888783264,1950512362,1964085082,
+   1976454162,1370794195, 1482254815,1925105902,
+   1999466402,2042023484,2021225582,3925947106,
+   6812979044,6812979044,9904321202
  ]
 //albums
 const albums = [
@@ -27,24 +28,26 @@ const charts = [
 
 ]
 
-const newAlbums = [
+const newAlbums = [298045772,297450532,286465882,295967762,
+  295826752,298198042,300098017,
   296186792,295967102,291358602,291098832,295857932,286842682,
   289107242,266772012,
 ]
 
 const genres = [
-  'POP', 'ROCK', 'HIPHOP/RAP',
-  'COUNTRY','AFROPOP','POP','SOUL','ARABIC MUSIC',
-  'JAZZ','METAL','SALSA','FRENCH MUSIC','REGGEA',
-  'LATIN','BLUES'
+  'Pop', 'Rock', 'Hiphop/Rap', 'Dance & EDM',
+  'Country','Africa Muisc','K-Pop','Soul','Arabic Music',
+  'Jazz','Metal','Salsa','French Music','Reggea',
+  'Latin','Blues','Classical', 'Forro', 'Asian Music','Japanese Music',
+  'Electronic','R&B','Grime','SoundTracks', 'Alternative'
 ]
 
 
 const categories = [
-  'POP', 'ROCK', 'HIPHOP/RAP',
-  'COUNTRY','AFROPOP','POP','SOUL','ARABIC MUSIC',
-  'JAZZ','METAL','SALSA','FRENCH MUSIC','REGGEA',
-  'LATIN','BLUES'
+  'Feel Good', 'Workout', 'Charts', 'New Release', 'Mixes',
+  'Chill','Acoustic','Party','Black Culture','At Home',
+  'Romance','METAL','Bon Appetit','Originals',"Women's Voices",
+  'Queer Culture','Melancholia','Between the sheets', 'ASMR', 'On Stage'
 ]
 
 export {charts, artists,categories, playlists, albums, newAlbums, genres};

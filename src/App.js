@@ -10,7 +10,7 @@ export const initialAppState = {
   leftsideBar:true,
   centerComponent:true,
   rightsideBar:true,
-  chosenPlaylist:musicStoreTwo,
+  chosenPlaylist:[],
   songIndex:0,
   isPlaying:false,
   categoryIsPlaying:false,
@@ -29,10 +29,12 @@ export const initialAppState = {
   playlistComponentIsLoaded:false,
   songTime:'--:--',
   songDuration:'--:--',
+  
   searchValue:'',
   homeMenu:true,
-  currentAlbumID:'',
-  currentPlaylistID:'',
+  loadedPlaylistId:1282483245,
+  isAplaylist:true,
+  isAnAlbum:false,
   currentSongID:'',
   playlistToShow:[]
 }

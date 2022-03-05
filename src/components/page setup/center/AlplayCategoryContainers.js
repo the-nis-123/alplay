@@ -5,6 +5,8 @@ import AlbumWrapper from "./AlbumWrapper";
 import PlaylistWrapper from "./PlaylistWrapper";
 import ArtistWrapper from "./ArtistsWrapper";
 import GenreWrapper from "./GenreWrapper";
+import CategoryHeadLabel from "./CategoryHeadLable";
+import MiniCategoryBlock from "./MiniCategoryBlock";
 
 const AlplayCategoryContainers = () => {  
   const styles={
@@ -24,30 +26,34 @@ const AlplayCategoryContainers = () => {
     gap: '10px',
   }
 
+  const miniCat = [6812979044,4888783264,1925105902,9904321202];
+
   return (
     <div css={styles}>
-      <h4>New Release</h4>
+      <CategoryHeadLabel linkText="See all" categoryName="New Realease" />
       <div css={gridStyles}>
         <AlbumWrapper albumsArr={newAlbums} />
       </div>
 
-      <h4>Artists</h4>
+      <MiniCategoryBlock itemsArr={miniCat} />
+      
+      <CategoryHeadLabel linkText="See all artists" categoryName="Artists" />
       <div css={gridStyles}>
         <ArtistWrapper artistsArr={artists} />
       </div>
 
-      <h4>Top Charts</h4>
+      <CategoryHeadLabel linkText="All Charts" categoryName="Top Charts" />
       <div css={gridStyles}>
         <PlaylistWrapper playlistsArr={charts}/>
       </div>
-
-      <h4>Explore</h4>
+      
+      <CategoryHeadLabel linkText="Explore all" categoryName="Now Playing Everywhere" />
       <div css={gridStyles}>
         <PlaylistWrapper playlistsArr={playlists} />
         <AlbumWrapper  albumsArr={albums} />
       </div>
 
-      <h4>Popular Genres</h4>
+      <CategoryHeadLabel linkText="See all genres" categoryName="Genres" />
       <div css={gridStyles}>
         <GenreWrapper genresArr={genres}/>
       </div>
@@ -58,7 +64,7 @@ const AlplayCategoryContainers = () => {
       </div>
 
 
-      <h4>Popular Categories</h4>
+      <CategoryHeadLabel linkText="See all" categoryName="Exclusive Collections" />
       <div css={gridStyles}>
         <GenreWrapper genresArr={categories}/>
       </div>

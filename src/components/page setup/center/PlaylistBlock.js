@@ -3,13 +3,87 @@ import React, { useEffect, useState } from "react";
 import CategoryReactions from "./CategoryReactions";
 import axios from "axios";
 import {useDispatch} from "react-redux";
-import {songCollectionClicked} from "../../../redux/actions/playlistActions";
+import {IoMdPause, IoMdPlay} from "react-icons/io";
+import {pauseButtonPressed} from "../../../redux/actions/audioPlayerActions";
+import {playAplaylist, songCollectionClicked} from "../../../redux/actions/playlistActions";
 
 
 const PlaylistBlock = ({playlistId}) => {
-  const [playlist, setPlaylist] = useState(' ');
+   
+  const [playlist, setPlaylist] = useState({});
   const [songsList, setSongsList] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  
+
+  
+  const categoryStyles = {
+    width:'220px',
+    height:'300px',
+    margin: '5px',
+    backgroundColor:'rgba(10, 61, 0, 0.2)',
+    padding:'15px',
+    borderRadius:"5px",
+    position:"relative",
+    //background:"linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6))", 
+    '&:hover':{
+      cursor:"pointer",
+      backgroundColor: 'rgba(10, 61, 0, 0.5)',
+      '#playpause':{
+       display:'flex'
+      }
+    }
+  }
+
+   const playpauseStyles = {
+    width: "45px",
+    height:"45px",
+    borderRadius:'50%',
+    backgroundColor:'rgba(0, 0, 0, 0.9)',
+    display: "none",
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top:'20%',
+    left: '74%',
+    transform: 'translate(-22.5px, -22.5px)',
+    zIndex:'1000',
+    '&:hover':{
+      cursor:'pointer'
+    }
+   };
+
+  const playPauseIconStyles = {
+    color:"lawngreen",
+    width: '50%',
+    height:'auto',
+  }
+
+  const imageStyles = {
+    width:"100%",
+    height:"200px",
+    borderRadius:"8px",
+  }
+  
+
+  ///dispatching category actions
+  let dispatch = useDispatch();
+
+  let pauseCategory = (e) => {
+     e.stopPropagation();
+    dispatch(pauseButtonPressed());
+  }
+
+  let playCategory = (e) => {
+     e.stopPropagation();
+     setIsPlaying(true);
+     dispatch(playAplaylist(playlistId));
+  }
  
+  let openThisCategory = (e) => {
+    e.stopPropagation();
+    dispatch(songCollectionClicked(songsList));
+  }
+
   useEffect(()=>{
     const options = {
       method: 'GET',
@@ -24,44 +98,21 @@ const PlaylistBlock = ({playlistId}) => {
       let returnedPlaylist = response.data;
       setPlaylist(returnedPlaylist);
       //console.log(returnedPlaylist);
-      setSongsList(returnedPlaylist.tracks.data);
+      setSongsList(returnedPlaylist);
     }).catch(function (error) {
       console.error(error);
     });
     },[playlistId]
   );
 
-
-  
-  const categoryStyles = {
-    width:'97%',
-    height:'180px',
-    display:'flex',
-    justifyContent:'center',
-    alignItems: 'center',
-    margin: '5px',
-    borderRadius:'6px',
-    backgroundColor:'rgba(10, 61, 0, 0.8)',
-    padding:'20px',
-    // background:`linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6)), url(${album.cover})`, 
-    '&:hover':{
-      '#categoryReactions, #playpause':{
-       display:'flex'
-      }
-    }
-  }
-
-  let dispatch = useDispatch();
-
-  
-  let openThisCategory = (e) => {
-    e.stopPropagation();
-    dispatch(songCollectionClicked(songsList));
-  }
-
   return (
     <div onDoubleClick={openThisCategory} css={categoryStyles}>
+      <img src={playlist.picture_medium} alt="" css={imageStyles} />
       <CategoryReactions description={playlist.description} categoryName={playlist.title}/>
+      <div id="playpause" css={playpauseStyles}>
+        {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
+        <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}
+      </div>
     </div>
   )
 }

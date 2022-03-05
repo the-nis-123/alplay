@@ -3,12 +3,12 @@ import { initialAppState } from "../../App";
 let audioTrack, volumeBar, seekBar;
 audioTrack = document.createElement('audio');
 //load track
-const loadSong = (index) => {
-  let playList = initialAppState.chosenPlaylist;
-  audioTrack.src=playList[index].songPath;
+const loadSong = () => {
+  audioTrack.src="https://cdns-preview-8.dzcdn.net/stream/c-8b175d5fccd6b1c54973c9307f572010-3.mp3";
+  audioTrack.load();
 }
 
-loadSong(0);
+
 
 //change volume
 volumeBar = document.getElementById('volumeSlider');
@@ -56,6 +56,7 @@ const audioPlayerReducer = (state=initialAppState, action) => {
   
   switch (action.type){
     case 'PLAY_SONG':
+      loadSong();
       audioTrack.play();
       return{
         ...state,
