@@ -7,7 +7,6 @@ const playlistReducer = (state=initialAppState, action) => {
       return {
         ...state,
         playlistToShow:action.payload,
-
         songsCollection:true,
       }
     
@@ -28,7 +27,13 @@ const playlistReducer = (state=initialAppState, action) => {
         isAplaylist:false,
         isAnAlbum:true,
       }
-  
+    case 'CLOZE_MODAL':
+       return {
+        ...state,
+        showPlaylist:false,
+        searchValue:"",
+        songsCollection:false,
+      }
     default:
       return state;
   }

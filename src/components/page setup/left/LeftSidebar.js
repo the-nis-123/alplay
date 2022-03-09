@@ -1,7 +1,6 @@
 /**@jsxImportSource @emotion/react */
 import facepaint from "facepaint";
 import {css} from "@emotion/css";
-
 import Wrapper from "../../global components/Wrapper";
 import {MdOutlinePlaylistAdd, MdFavorite, MdFileDownload} from "react-icons/md";
 
@@ -47,6 +46,9 @@ const LeftSidebar = () => {
         </Wrapper>
         <Wrapper width="100%" cursor="pointer" margin="4px 0" padding="5px 10px" borderRadius="10px" display="flex" justifyContent="flex-start" alignItems="center" fontSize="1rem">
           <MdFileDownload css={IconsStyles}/><span>Downloads</span>
+        </Wrapper>
+        <Wrapper width="100%" cursor="pointer" padding="10px 20px"  display="flex" justifyContent="flex-start" alignItems="center" fontSize="1rem">
+          <span>Your Playlists</span>
         </Wrapper>
       </Wrapper>
     </div>

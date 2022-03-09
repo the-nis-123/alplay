@@ -1,7 +1,6 @@
 /**@jsxImportSource @emotion/react */
 import Wrapper from "../../global components/Wrapper";
 import Inputform from "../../global components/Inputform";
-import {IoMdSearch} from"react-icons/io";
 import { css } from "@emotion/css";
 import {useSelector, useDispatch} from "react-redux";
 import facepaint from "facepaint";
@@ -28,21 +27,15 @@ const CenterHeader = () => {
     alignItems:'center',
   }));
 
-  const iconStyles = {
-    '&:hover':{
-      cursor: 'pointer'
-    }
-  }
 
   
   return (
     <div className={wrapperStyles}
     >
-      <Wrapper width="60%"  height="30px" borderRadius="15px" backgroundColor="rgba(3, 61, 0,0.8)"
+      <Wrapper margin="10px" width="100%"  height="30px" backgroundColor="rgba(3, 61, 0,0.1)"
        display="flex" alignItems="center" justifyContent="center">
-        <Inputform id="main-search" value={searchValue} onChange={searching} width="95% " height="30px" padding="0 10px" borderRadius="15px" 
-        backgroundColor="rgba(3, 61, 0,0.8)" placeholder="search alplay" color="lightgreen"/>
-        <IoMdSearch css={iconStyles}/>
+        <Inputform id="main-search" value={searchValue} onChange={searching} width="100% " height="30px" padding="0 10px"
+        backgroundColor="rgba(3, 61, 0,0.2)" placeholder="search alplay" color="lightgreen"/>
       </Wrapper>
     </div>
   )

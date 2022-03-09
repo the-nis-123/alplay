@@ -11,7 +11,7 @@ import { css } from "@emotion/css";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import facepaint from "facepaint";
-
+import {closeButton} from "../../redux/actions/otherActions";
 
 
 const SearchResults = () => {
@@ -53,13 +53,11 @@ const SearchResults = () => {
     '@media(min-width: 1000px)'
   ]);
 
-  let chosenPlaylist = useSelector(state=>state.audioPlayerReducer.chosenPlaylist);
-  let currentSong = useSelector(state=>state.audioPlayerReducer.songIndex);
 
   const wrapperStyles={
     width:'100%',
-    height:'calc(100% - 20px)',
-    background:`linear-gradient(rgb(0,0,0) 20%, rgba(0,0,0,0.2) 300%), url(${chosenPlaylist[currentSong].songPic})`,
+    height:'calc(100% - 60px)',
+    background:`linear-gradient(rgb(0,0,0) 20%, rgba(0,0,0,0.2) 300%)`,
     backgroundRepeat:'no-repeat',
     backgroundPosition: 'center',
     backgroundAttachment: 'fixed',
@@ -69,7 +67,7 @@ const SearchResults = () => {
     justifyContent:'flex-start',
     alignItems:'center', 
     position:'absolute',
-    top:'0'  
+    top:'40px'  
   }
 
   const headingStyles={
@@ -172,6 +170,11 @@ const SearchResults = () => {
     justifyContent:'center'
   }
 
+   const closebutton = {
+   color:"red",
+   cursor:"pointer"
+  }
+
   //dispatch some actions 
   let dispatch = useDispatch();
   //song double clicked, play import PropTypes from 'prop-types'
@@ -194,6 +197,11 @@ const SearchResults = () => {
     e.stopPropagation();
     dispatch(shareThisSong());
   }
+
+  let close = (e) => {
+    e.stopPropagation();
+    dispatch(closeButton());
+  }
   
 
   return (
@@ -202,9 +210,10 @@ const SearchResults = () => {
         <span css={title}># TITLE</span>
         <span css={album}>ALBUM</span>
         <span css={duration}>DURATION</span>
+        <span onClick={close} css={closebutton}>X</span>
       </h3>
       <ul css={listContainerStyles}>
-        {
+        {searchResults.length > 0 ?
           searchResults.map(song => 
           <li key={song.id} className={listStyles} 
           onDoubleClick={songDoubleClicked}
@@ -232,7 +241,7 @@ const SearchResults = () => {
               </span>
             </p>
           </li>
-          )}
+          ):""}
       </ul>
     </div>
   )

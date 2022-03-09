@@ -34,7 +34,6 @@ const Signup = () => {
     flexDirection:"column" ,
     justifyContent:"center",
     alignItems:"flex-start",
-    fontSize:['1.2rem', '1rem']
   }));
 
 
@@ -45,7 +44,6 @@ const Signup = () => {
     flexDirection:"column" ,
     ustifyContent:"center",
     alignItems:"center",
-    outline:"solid 1px #181818", 
     borderRadius:"20px",
     padding:'20px 0',
   }));
@@ -69,21 +67,19 @@ const Signup = () => {
    const headStyles = {
     textAlign: 'center',
     color: 'teal',
-    fontSize: '1.4rem',
     margin:'0.625em 0'
   }
 
   const leftheadStyles = {
     textAlign: 'left',
     color: 'teal',
-    fontSize: '1.4rem',
     margin:'0.625em 0'
   }
 
   const linkStyles = {
     color:'lawngreen',
     textDecoration: 'none',
-    fontSize:'0.7rem'
+    fontSize:'0.8rem'
   }
 
   const linkContainerStyles = {

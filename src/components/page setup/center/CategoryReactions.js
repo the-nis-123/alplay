@@ -1,19 +1,7 @@
 /**@jsxImportSource @emotion/react */
 import Wrapper from "../../global components/Wrapper";
-import {BsHeadphones} from "react-icons/bs";
-import {RiShareForwardFill} from "react-icons/ri";
-import {ImDownload3} from "react-icons/im";
-import {MdFavorite} from "react-icons/md";
-import { css } from "@emotion/css";
-import facepaint from "facepaint";
 
 const CategoryReactions = (props) => {
-
-  const bp = facepaint([
-    '@media(min-width: 700px)',
-    '@media(min-width: 999px)',
-    '@media(min-width: 1000px)'
-  ]);
 
   const playlistDescriptionStyles = {
     textAlign:"left",
@@ -27,21 +15,6 @@ const CategoryReactions = (props) => {
    padding:"3px 0",
 
   }
-  
-  const reactionsIconsStyles = {
-    color:'lightgreen',
-    margin:'5px' 
-  }
-
-  const reactionContainerStyles = css(bp({
-    width:"100%",
-    display:'flex', 
-    justifyContent:"space-evenly", 
-  }));
-
-  const labelStyles = css(bp({
-    display:'inline-block',
-  }));
   
   const wrapperStyles = {
     width:"100%",

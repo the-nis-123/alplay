@@ -97,8 +97,8 @@ const PlaylistBlock = ({playlistId}) => {
     axios.request(options).then(function (response) {
       let returnedPlaylist = response.data;
       setPlaylist(returnedPlaylist);
-      //console.log(returnedPlaylist);
-      setSongsList(returnedPlaylist);
+      //console.log(returnedPlaylist.tracks.data);
+      setSongsList(returnedPlaylist.tracks.data);
     }).catch(function (error) {
       console.error(error);
     });

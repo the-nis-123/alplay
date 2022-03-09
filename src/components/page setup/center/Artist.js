@@ -71,10 +71,10 @@ const Artist = ({artistid}) => {
 
   const detailsWrapper = {
     width:"100%",
-    height :"100px",
+    height :"120px",
     display:"flex",
     flexDirection:"column",
-    justifyContent:'space-between',
+    justifyContent:'space-evenly',
     alignItems:'center',
     position:'absolute',
     bottom:'10px',

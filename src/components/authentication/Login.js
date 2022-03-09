@@ -35,8 +35,7 @@ const Login = () => {
     display:['none', 'none', 'none', 'none', 'flex'],
     flexDirection:"column" ,
     justifyContent:"center",
-    alignItems:"flex-start",
-    fontSize:['1.2rem', '1rem']
+    alignItems:"flex-start"
   }));
 
   const paraStyles = {
@@ -51,7 +50,6 @@ const Login = () => {
     flexDirection:"column" ,
     ustifyContent:"center",
     alignItems:"center",
-    outline:"solid 1px #181818", 
     borderRadius:"20px",
     padding:'20px 0'
   }));
@@ -73,14 +71,13 @@ const Login = () => {
 
   const headStyles = {
     color: 'teal',
-    fontSize: '1.4rem',
     margin:'10px 0'
   }
   
   const linkStyles = {
     color:'lawngreen',
     textDecoration: 'none',
-    fontSize:'0.7rem'
+    fontSize:'0.8rem'
   }
 
 

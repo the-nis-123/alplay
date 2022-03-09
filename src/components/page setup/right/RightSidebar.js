@@ -1,9 +1,7 @@
 /**@jsxImportSource @emotion/react */
-import Chat from "./chat/Chat";
 import Profile from "./profile/Profile";
 import Notifications from "./notifications/Notifications";
 import Playlist from "./playlist/Playlist";
-import Newsfeed from "./news feed/Newsfeed";
 import { useSelector } from "react-redux";
 import { css } from "@emotion/css";
 import facepaint from "facepaint";
@@ -28,20 +26,16 @@ const RightSidebar = () => {
   }));
 
   const {
-    homeComponentIsLoaded,
     playlistComponentIsLoaded,
-    chatComponentIsLoaded,
     notificationComponentIsLoaded,
     profileComponentIsLoaded } = useSelector(state=>state.loadComponentReducer);
 
   return (
     <div className={wrapperStyles}
     >
-      { homeComponentIsLoaded && <Newsfeed/> }
       { notificationComponentIsLoaded && <Notifications/> }
       { playlistComponentIsLoaded && <Playlist/> }
       { profileComponentIsLoaded && <Profile/> }
-      { chatComponentIsLoaded &&<Chat/> }
     </div>
   )
 }

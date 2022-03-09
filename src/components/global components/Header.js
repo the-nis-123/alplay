@@ -1,7 +1,6 @@
 /**@jsxImportSource @emotion/react */
 import RightHeader from "../page setup/right/RightHeader";
 import LeftHeader from "../page setup/left/LeftHeader";
-import CenterHeader from "../page setup/center/CenterHeader";
 
 const Header = () => {
   const styles = {
@@ -15,7 +14,7 @@ const Header = () => {
   return (
     <div css={styles}>
       <LeftHeader/>
-      <CenterHeader/>
+      
       <RightHeader/>
     </div>
   )

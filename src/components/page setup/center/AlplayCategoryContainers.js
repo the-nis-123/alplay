@@ -7,6 +7,7 @@ import ArtistWrapper from "./ArtistsWrapper";
 import GenreWrapper from "./GenreWrapper";
 import CategoryHeadLabel from "./CategoryHeadLable";
 import MiniCategoryBlock from "./MiniCategoryBlock";
+import CenterHeader from "./CenterHeader";
 
 const AlplayCategoryContainers = () => {  
   const styles={
@@ -21,16 +22,14 @@ const AlplayCategoryContainers = () => {
   }
 
   const gridStyles = {
-    width: '100%',
-    display: "grid",
-    gridTemplateColumns: '1fr',
-    gap: '7px',
+    minWidth: '750px !important',
   }
 
   const miniCat = [6812979044,4888783264,1925105902,9904321202];
 
   return (
     <div css={styles}>
+      <CenterHeader/>
       <CategoryHeadLabel linkText="See all" categoryName="New Realease" />
       <div css={gridStyles}>
         <AlbumWrapper albumsArr={newAlbums} />

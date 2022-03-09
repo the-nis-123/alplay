@@ -1,7 +1,6 @@
 import Authentication from './components/authentication/Authentication';
 import Home from './components/page setup/Home';
 import { useSelector } from 'react-redux';
-import musicStoreTwo from './media/MusicStoreTwo';
 
 
 export const initialAppState = {
@@ -17,8 +16,10 @@ export const initialAppState = {
   isSeeking:false,
   volumeOn:true,
   shuffleButtonOn:false,
+
   showPlaylist:false,
   songsCollection:false,
+  
   repeatOneSong:false,
   repeatAllSongs:false,
   repeatOff:true,

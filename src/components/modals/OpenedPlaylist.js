@@ -1,14 +1,11 @@
 /**@jsxImportSource  @emotion/react */
 import { useSelector, useDispatch } from "react-redux";
-import {RiShareForwardFill} from "react-icons/ri";
-import {ImDownload3} from "react-icons/im";
-import {MdFavorite} from "react-icons/md";
-import {
-  markSongAsFavorite, saveSongForOffline, 
-  shareThisSong, songInPlaylistDoubleClicked
+import { songInPlaylistDoubleClicked
 } from "../../redux/actions/audioPlayerActions";
 import { css } from "@emotion/css";
 import facepaint from "facepaint";
+import {closeButton} from "../../redux/actions/otherActions";
+
 
 
 
@@ -19,9 +16,7 @@ const OpenedPlaylist = () => {
     '@media(min-width: 999px)',
     '@media(min-width: 1000px)'
   ]);
-
-  let chosenPlaylist = useSelector(state => state.audioPlayerReducer.chosenPlaylist);
-  let currentSong = useSelector(state => state.audioPlayerReducer.songIndex);
+ 
   let songslist = useSelector(state => state.playlistReducer.playlistToShow);
   
   console.log(songslist);
@@ -29,11 +24,7 @@ const OpenedPlaylist = () => {
   const wrapperStyles={
     width:'100%',
     height:'calc(100% - 20px)',
-    background:`linear-gradient(rgb(0,0,0) 20%, rgba(0,0,0,0.2) 300%), url(${chosenPlaylist[currentSong].songPic})`,
-    backgroundRepeat:'no-repeat',
-    backgroundPosition: 'center',
-    backgroundAttachment: 'fixed',
-    backgroundSize:'contain',
+    background:`linear-gradient(rgb(0,0,0) 20%, rgba(0,0,0,0.7) 300%)`,
     display:'flex',
     flexDirection:'column',
     justifyContent:'flex-start',
@@ -89,12 +80,7 @@ const OpenedPlaylist = () => {
     }
   }));
 
-  const icons = css(bp({
-    margin: '5px',
-    color:'darkgreen',
-    cursor: 'pointer',
-    fontSize:'0.9rem'
-  }))
+ 
 
   const songCoverPicStyles={
     width:'40px',
@@ -145,6 +131,11 @@ const OpenedPlaylist = () => {
     justifyContent:'center'
   }
 
+  const closebutton = {
+   color:"red",
+   cursor:"pointer"
+  }
+
   //dispatch some actions 
   let dispatch = useDispatch();
   //song double clicked, play import PropTypes from 'prop-types'
@@ -153,21 +144,13 @@ const OpenedPlaylist = () => {
     dispatch(songInPlaylistDoubleClicked());
   }
 
-  let markThisSongAsFavorite = (e) => {
-    e.stopPropagation();
-    dispatch(markSongAsFavorite());
-  }
-
-  let downloadThisSong = (e) => {
-    e.stopPropagation();
-    dispatch(saveSongForOffline());
-  }
-
-  let shareSong = (e) => {
-    e.stopPropagation();
-    dispatch(shareThisSong());
-  }
   
+  let close = (e) => {
+    e.stopPropagation();
+    dispatch(closeButton());
+  }
+
+ 
 
   return (
     <div css={wrapperStyles}>
@@ -175,9 +158,10 @@ const OpenedPlaylist = () => {
         <span css={title}># TITLE</span>
         <span css={album}>ALBUM</span>
         <span css={duration}>DURATION</span>
+        <span onClick={close} css={closebutton}>X</span>
       </h3>
       <ul css={listContainerStyles}>
-        {
+        { songslist.length > 0 ?
           songslist.map(song => 
           <li key={song.id} className={listStyles} 
           onDoubleClick={songDoubleClicked}
@@ -195,17 +179,10 @@ const OpenedPlaylist = () => {
             </div>
             <span css={album}>{song.album['title']}</span>
             <p css={duration}>
-              <span id="songActions">
-                <ImDownload3 className={icons} onClick={downloadThisSong}/>
-                <MdFavorite className={icons} onClick={markThisSongAsFavorite}/>
-                <RiShareForwardFill className={icons} onClick={shareSong}/>
-              </span>
-              <span>
                 {Math.floor(song.duration / 60)+ ':' + song.duration % 60}
-              </span>
             </p>
           </li>
-          )}
+          ):""}
       </ul>
     </div>
   )
