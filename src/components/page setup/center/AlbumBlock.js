@@ -15,17 +15,17 @@ const AlbumBlock = ({albumId}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   
   const categoryStyles = {
-    width:'220px',
-    height:'300px',
+    width:'240px',
+    height:'320px',
     position:'relative',
     margin: '5px',
     backgroundColor:'rgba(10, 61, 0, 0.2)',
-    padding:'15px',
+    padding:'10px',
     borderRadius:'5px',
     //background:"linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6))", 
     '&:hover':{
       cursor:"pointer",
-      backgroundColor:'rgba(10, 61, 0, 0.5)',
+      backgroundColor:'rgba(10, 61, 0, 0.3)',
       '#playpause':{
        display:'flex'
       }
@@ -59,7 +59,7 @@ const AlbumBlock = ({albumId}) => {
       
     const imageStyles = {
       width:"100%",
-      height:"200px",
+      height:"190px",
       borderRadius:"8px"
     }
    
@@ -107,8 +107,8 @@ const AlbumBlock = ({albumId}) => {
 
   return (
     <div onDoubleClick={openThisCategory} css={categoryStyles}>
-      <img src={album.cover_medium} alt="" css={imageStyles}/>
-      <CategoryReactions categoryName={album.title}/>
+      {album.cover_medium?<img src={album.cover_medium} alt="" css={imageStyles}/>:''}
+      {album.title?<CategoryReactions categoryName={album.title}/>:''}
       <div id="playpause" css={playpauseStyles}>
         {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
         <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}

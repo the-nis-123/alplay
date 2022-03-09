@@ -20,10 +20,10 @@ const EventReactions = () => {
   return (
     <Wrapper width="100%" borderRadius="10px" height ="100%" display="flex" flexDirection="column"
     justifyContent="space-between" alignItems="flex-start"  
-    padding="10px 0" background="linear-gradient(rgba(30, 113, 64, 0.4), rgba(0,0,0,0.8))"
+    padding="10px" background="linear-gradient(rgba(30, 113, 64, 0.4), rgba(0,0,0,0.8))"
     >
-     <Wrapper display="flex" flexDirection="column" padding="10px" color=" #E1E8ED">
-       <h3 css={eventNameStyles}>Event Name</h3>
+     <Wrapper display="flex" flexDirection="column" padding="10px" >
+       <h4 css={eventNameStyles}>Event Name</h4>
        <p css={eventDetailsStyles}>Venue:</p>
        <p css={eventDetailsStyles}>Date:</p>
        <p css={eventDetailsStyles}>Host:</p>
@@ -33,17 +33,17 @@ const EventReactions = () => {
       <Wrapper display="flex" flexDirection="row-reverse" alignItems="center" 
       justifyContent="center" margin="5px"     color='#D5EAF2'
       >
-        <span>Reminder</span><BsAlarm css={reactionsIconsStyles}/>
+        <span></span><BsAlarm css={reactionsIconsStyles}/>
       </Wrapper>
       <Wrapper display="flex" flexDirection="row-reverse" alignItems="center" 
       justifyContent="center" margin="5px"   color='#D5EAF2'
       >
-        <span>Interested</span><MdFavorite css={reactionsIconsStyles}/>
+        <span></span><MdFavorite css={reactionsIconsStyles}/>
       </Wrapper>
       <Wrapper display="flex" flexDirection="row-reverse" alignItems="center" 
       justifyContent="center" margin="5px"   color='#D5EAF2'
       >
-        <span>Share</span><RiShareForwardFill css={reactionsIconsStyles}/>
+        <span></span><RiShareForwardFill css={reactionsIconsStyles}/>
       </Wrapper>
      </Wrapper>
     </Wrapper>

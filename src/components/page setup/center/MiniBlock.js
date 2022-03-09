@@ -9,6 +9,8 @@ import {playButtonPressed, pauseButtonPressed} from "../../../redux/actions/audi
 const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
   const wrapperTwo = {
     width: '100%',
+    height:"80px",
+    margin:"2px 0",
     display: 'flex',
     background:`linear-gradient(to right, ${colorOne}, ${colorTwo})`,
      '&:hover':{
@@ -28,8 +30,8 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
   }
 
   const photo = {
-    width:'60px',
-    height:'60px'
+    width:'80px',
+    height:'80px'
   }
 
    const playpauseStyles = {
@@ -95,9 +97,9 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
 
   return(
     <div css={wrapperTwo} key={playlistId}>
-      <img src={playlist.picture} alt="" css={photo} />
+      {playlist.picture?<img src={playlist.picture} alt="" css={photo} />:""}
       <div css={wrapperThree}>
-        <h2>{playlist.title}</h2>
+        <h4>{playlist.title}</h4>
         <div id="playpause" css={playpauseStyles}>
           {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
           <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}

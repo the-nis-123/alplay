@@ -12,7 +12,7 @@ const  AlbumWrapper = ({albumsArr}) => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2
+      items: 3
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
@@ -27,7 +27,7 @@ return (
     responsive={responsive}
     infinite={true}
     keyBoardControl={true}
-    removeArrowOnDeviceType={["mobile"]}
+    removeArrowOnDeviceType={["mobile","tablet","desktop"]}
   >
     {
       albumsArr.map(item => {

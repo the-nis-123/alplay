@@ -1,20 +1,32 @@
 /**@jsxImportSource @emotion/react */
 import MiniBlock from "./MiniBlock";
+import { css } from "@emotion/css";
+import facepaint from "facepaint";
+
 
 const  MiniCategoryBlock = ({itemsArr}) => {
   
-  const wrapperOne = {
+  const bp = facepaint([
+    '@media(min-width: 500px)',
+    '@media(min-width: 999px)',
+    '@media(min-width: 1000px)'
+  ]);
+  
+  const wrapperOne = css(bp({
     width:'100%',
     display:'grid',
-    gridTemplateColumns:'1fr 1fr',
-    gridTemplateRows:'repeat(2, "60px")',
+    gridTemplateColumns:['1fr', '1fr 1fr', ' 1fr 1fr'],
+    gridTemplateRows:'repeat(2, "80px")',
     gap:'10px',
-    margin:'20px 0 10px 0',
-  }
+    padding:'10px 5px',
+  }));
+
+ 
+
  
 
 return (
-    <div css={wrapperOne}>
+    <div className={wrapperOne}>
       <MiniBlock colorOne="#093637" colorTwo="#44a08d" playlistId={itemsArr[0]}/>
       <MiniBlock colorOne="#0f2027" colorTwo="#2c5364"  playlistId={itemsArr[1]}/>
       <MiniBlock colorOne="#2c3e50" colorTwo="#bdc3c7"  playlistId={itemsArr[2]}/>

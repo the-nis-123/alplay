@@ -29,20 +29,18 @@ const Artist = ({artistid}) => {
   );
 
   const profilepic = {
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    width:"100%",
-    height:"220",
-    borderRadius:"8px",
+    width:"170px",
+    height:"170px",
+    borderRadius:"50%",
     border:"none",
     outline:"none"
   }
 
   const wrapperStyles = {
-    width:'220px',
-    height:'300px',
-    position:'relative',
+    width:'240px',
+    height:'320px',
+    display:"flex",
+    justifyContent:"center",
     margin: '5px',
     backgroundColor:'rgba(10, 61, 0, 0.2)',
     padding:'15px',
@@ -50,7 +48,7 @@ const Artist = ({artistid}) => {
     //background:"linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6))", 
     '&:hover':{
       cursor:"pointer",
-      backgroundColor:'rgba(10, 61, 0, 0.5)',
+      backgroundColor:'rgba(10, 61, 0, 0.3)',
       '#playpause':{
        display:'flex'
       }
@@ -65,6 +63,7 @@ const Artist = ({artistid}) => {
     border:'none',
     outline:'none',
     margin:'6px 0',
+    backgroundColor:"lightgreen",
     '&:hover': {
       cursor: 'pointer'
     }
@@ -72,7 +71,7 @@ const Artist = ({artistid}) => {
 
   const detailsWrapper = {
     width:"100%",
-    height :"70px",
+    height :"100px",
     display:"flex",
     flexDirection:"column",
     justifyContent:'space-between',
@@ -86,18 +85,19 @@ const Artist = ({artistid}) => {
     display:"flex",
     width:"100%",
     alignItems:"center",
-    justifyContent:"space-evenly"
+    justifyContent:"space-evenly",
+    fontSize:'0.8rem'
   }
 
   return (
     <div css={wrapperStyles}>
-      <img src={artist.picture} alt="" css={profilepic} />
+     {artist.picture_medium? <img src={artist.picture_medium} alt="" css={profilepic} />:''}
       <div css={detailsWrapper}>
-        <h2>{artist.name}</h2>
-        <button css={buttonStyles}>Follow</button>
+       {artist.name? <h4>{artist.name}</h4> :''}
+        {artist.name ?<button css={buttonStyles}>Follow</button>:''}
         <div css={innerWrapper}> 
-          <p>Albums: {artist.nb_album}</p> 
-          <p>Followers: {artist.nb_fan}</p>
+         {artist.nb_album? <p>Albums: {artist.nb_album}</p>:'' }
+         {artist.nb_fan? <p>Followers: {artist.nb_fan}</p>: ''}
         </div>
       </div>
     </div>

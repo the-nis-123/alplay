@@ -17,17 +17,17 @@ const PlaylistBlock = ({playlistId}) => {
 
   
   const categoryStyles = {
-    width:'220px',
-    height:'300px',
+    width:'240px',
+    height:'320px',
     margin: '5px',
     backgroundColor:'rgba(10, 61, 0, 0.2)',
-    padding:'15px',
+    padding:'10px',
     borderRadius:"5px",
     position:"relative",
     //background:"linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6))", 
     '&:hover':{
       cursor:"pointer",
-      backgroundColor: 'rgba(10, 61, 0, 0.5)',
+      backgroundColor: 'rgba(10, 61, 0, 0.3)',
       '#playpause':{
        display:'flex'
       }
@@ -60,7 +60,7 @@ const PlaylistBlock = ({playlistId}) => {
 
   const imageStyles = {
     width:"100%",
-    height:"200px",
+    height:"190px",
     borderRadius:"8px",
   }
   
@@ -107,11 +107,11 @@ const PlaylistBlock = ({playlistId}) => {
 
   return (
     <div onDoubleClick={openThisCategory} css={categoryStyles}>
-      <img src={playlist.picture_medium} alt="" css={imageStyles} />
-      <CategoryReactions description={playlist.description} categoryName={playlist.title}/>
+      {playlist.picture_medium? <img src={playlist.picture_medium} alt="" css={imageStyles} /> : ''}
+      {playlist.description? <CategoryReactions description={playlist.description} categoryName={playlist.title}/> : ''}
       <div id="playpause" css={playpauseStyles}>
-        {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
-        <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}
+          {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
+          <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}
       </div>
     </div>
   )

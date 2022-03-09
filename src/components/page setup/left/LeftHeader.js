@@ -11,9 +11,8 @@ const LeftHeader = () => {
   ]);
 
   const wrapperStyles = css(bp({
-    width: ['20%','40%', '25%'],
     height:'60px',
-    display:['flex', 'flex', 'flex'],
+    display:'flex',
     justifyContent:'flex-start',
     alignItems:'center',
     padding:'0 10px'
@@ -29,8 +28,6 @@ const LeftHeader = () => {
 
   const appNameStyles = css(bp({
    color:'#30F284',
-   fontSize:['', '1.5rem !important', '1rem'],
-   display:['none', 'block', 'block']
   }));
 
   return (

@@ -16,18 +16,21 @@ const CategoryReactions = (props) => {
   ]);
 
   const playlistDescriptionStyles = {
-    width:'100%',
+    textAlign:"left",
+    padding:"3px 0",
     color:"#daddda",
   }
 
   const playlistNameStyles = {
    color:'honeydew',
-   textAlign:"center"
+   textAlign:"left",
+   padding:"3px 0",
+
   }
   
   const reactionsIconsStyles = {
     color:'lightgreen',
-    margin:['5px 1.1em', '5px 1.1em', '5px 0.6em'], 
+    margin:'5px' 
   }
 
   const reactionContainerStyles = css(bp({
@@ -42,14 +45,15 @@ const CategoryReactions = (props) => {
   
   const wrapperStyles = {
     width:"100%",
-    height :"70px",
+    height :"100px",
+    fontSize:"0.8rem",
     display:"flex",
     flexDirection:"column",
-    justifyContent:'center',
     alignItems:'center',
     position:'absolute',
     bottom:'10px',
     left:'0',
+    padding:"0 10px"
    }
 
   
@@ -57,41 +61,13 @@ const CategoryReactions = (props) => {
 
   return (
     <div css={wrapperStyles} >
-      <Wrapper display="flex" flexDirection="column" padding="0.625em" position="relative"
+      <Wrapper display="flex" flexDirection="column" position="relative"
       >
         <h3 css={playlistNameStyles}>{props.categoryName}</h3>
         <p css={playlistDescriptionStyles}>
          {props.description}
         </p>
       </Wrapper>
-        
-      <div className={reactionContainerStyles} id="categoryReactions" >
-        
-        <Wrapper display="flex" flexDirection="column-reverse" alignItems="center" 
-        justifyContent="center" margin="0.3125em" 
-        >
-          <span className={labelStyles}>2.2B</span>
-          <BsHeadphones css={reactionsIconsStyles}/>
-        </Wrapper>
-        <Wrapper display="flex" flexDirection="column-reverse" alignItems="center" 
-        justifyContent="center" margin="0.3125em" 
-        >
-          <span className={labelStyles}>3.5k</span>
-          <ImDownload3 css={reactionsIconsStyles}/>
-        </Wrapper>
-        <Wrapper display="flex" flexDirection="column-reverse" alignItems="center" 
-        justifyContent="center" margin="0.3125em"
-        >
-          <span className={labelStyles}>456</span>
-          <MdFavorite css={reactionsIconsStyles}/>
-        </Wrapper>
-        <Wrapper display="flex" flexDirection="column-reverse" alignItems="center" 
-        justifyContent="center" margin="0.3125em"
-        >
-          <span className={labelStyles}>1.3k</span>
-          <RiShareForwardFill css={reactionsIconsStyles}/>
-        </Wrapper>
-        </div>
     </div>
   )
 }

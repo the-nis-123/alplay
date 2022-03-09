@@ -10,11 +10,12 @@ import MiniCategoryBlock from "./MiniCategoryBlock";
 
 const AlplayCategoryContainers = () => {  
   const styles={
-    width:"calc(100% - 5px)",
+    width:"100%",
     height:'calc(100% - 20px)',  
     display:"flex",
     flexDirection:'column',
-    overflow:"auto",
+    overflowY:"scroll",
+    overflowX:"hidden",
     position:'absolute',
     top:'0'
   }
@@ -23,7 +24,7 @@ const AlplayCategoryContainers = () => {
     width: '100%',
     display: "grid",
     gridTemplateColumns: '1fr',
-    gap: '10px',
+    gap: '7px',
   }
 
   const miniCat = [6812979044,4888783264,1925105902,9904321202];
@@ -47,7 +48,7 @@ const AlplayCategoryContainers = () => {
         <PlaylistWrapper playlistsArr={charts}/>
       </div>
       
-      <CategoryHeadLabel linkText="Explore all" categoryName="Now Playing Everywhere" />
+      <CategoryHeadLabel linkText="Explore all" categoryName="Now Playing" />
       <div css={gridStyles}>
         <PlaylistWrapper playlistsArr={playlists} />
         <AlbumWrapper  albumsArr={albums} />

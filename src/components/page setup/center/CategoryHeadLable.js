@@ -22,8 +22,8 @@ const  CategoryHeadLabel = ({categoryName, linkText}) => {
 
 return (
     <div css={wrapper}>
-      <h2>{categoryName}</h2>
-      <h3 css={link}>{linkText}</h3>
+      <h3>{categoryName}</h3>
+      <h4 css={link}>{linkText}</h4>
     </div>
   );
 }

@@ -18,14 +18,16 @@ const MainContent = () => {
   ]);
 
   const wrapperStyles = css(bp({
-    width: ['100%', '65%', '50%'],
+    width:"calc(100% - 250px)",
     height:'100%',
-    padding:'20px 0',
-    display:['flex', 'flex', 'flex'],
+    overflowY:"scroll",
+    overflowX:"hidden",
+    padding:'5px',
+    display:'flex',
     flexDirection:'column',
-    justifyContent:['flex-start', 'flex-start', 'flex-start'],
-    alignItems:['center', 'center', 'center'],
-    background: "linear-gradient(to bottom, rgba(3, 61, 0,0.8), rgba(0, 0, 0,0.4) 70%)",
+    justifyContent:'flex-start',
+    alignItems:'center',
+    background: "linear-gradient(to bottom, rgba(3, 61, 0,0.5), rgba(0, 0, 0,0.4) 70%)",
   }));
 
   let menu = useSelector(state=>state.searchReducer.homeMenu);
@@ -36,7 +38,7 @@ const MainContent = () => {
   return (
     <div className={wrapperStyles}
     >
-      <Wrapper width="95%" height ="calc(100% - 100px)" position="relative">
+      <Wrapper width="100%" height ="calc(100% - 100px)" position="relative">
        { menu && <AlplayCategoryContainers/>}
        { search && <SearchResults/>} 
        { playlist && <OpenedPlaylist/>}

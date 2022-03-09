@@ -34,7 +34,6 @@ const Home = () => {
       >
        <LeftSidebar/>
        <MainContent/>
-       <RightSidebar/>
       </Wrapper>
     </div>
   )

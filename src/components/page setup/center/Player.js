@@ -268,19 +268,12 @@ const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
 
   const songTitleStyles = {
     textAlign:'left',
-    width:'80%',
+    width:'100%',
     whiteSpace:'nowrap',
     overflow:'hidden',
     textOverflow:'ellipsis',
     color:'limegreen',
     padding:'3px 0'
-  }
-
-
-  const songCountStyles = {
-    textAlign:'right',
-    color:'limegreen',
-    width:'60px'
   }
 
   const songCoverPicStyles={
@@ -302,20 +295,21 @@ const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
 
 
   return (
-    <Wrapper width="100%" height ="100px" backgroundColor="black" padding="10px"
-    display="flex" flexDirection="column" justifyContent="space-evenly" alignItems="center"  
+    <Wrapper width="100%" height ="100px"  padding="10px"
+    display="flex" justifyContent="space-evenly" alignItems="center"  
     > 
       
-        <Wrapper width="80%" display="flex" justifyContent="space-between" alignItems="center" margin="0 0 10px 0">
-          <Wrapper width="80%" display="flex" justifyContent="flex-start" alignItems="center">
-            <img src={songImage} alt="" css={songCoverPicStyles} />
-            <Wrapper width="100%" display="flex" flexDirection="column">
-              <h3 css={songTitleStyles}>{songTitle}</h3> 
-              <p css={songTitleStyles}>{artistName}</p> 
-            </Wrapper>
-          </Wrapper>
-          <p css={songCountStyles}>{songIndex + 1} / {playlist.length}</p>
+      <Wrapper display="flex" fontSize="0.8rem" justifyContent="flex-start" alignItems="center">
+        {songImage? <img src={songImage} alt="" css={songCoverPicStyles} />:''}
+        <Wrapper width="100%" display="flex" flexDirection="column">
+          <h3 css={songTitleStyles}>{songTitle}</h3> 
+          <p css={songTitleStyles}>{artistName}</p> 
         </Wrapper>
+      </Wrapper>
+          
+       
+
+      <Wrapper width="100%" padding="10px 20px" display="flex" justifyContent="center" alignItems="center" flexDirection="column">
         <Wrapper width="100%" display="flex" justifyContent="center" alignItems="center" 
         fontSize="0.8rem" color="#D5EAF2">
           <p id="curreSongPostion" >0:00</p> 
@@ -323,8 +317,6 @@ const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
           <p id="songDuration">{songTime}</p>
         </Wrapper>
       
-
-      <Wrapper width="100%" padding="10px 20px" display="flex" justifyContent="center" alignItems="center">
         <Wrapper display="flex" justifyContent="center" alignItems="center">
           <Wrapper display="flex" justifyContent="center" alignItems="center">
             {shuffleButton && <IoMdShuffle css={playerActiveIconStyles} onClick={shuffleSongsOff}/>}

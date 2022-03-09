@@ -14,12 +14,13 @@ const Post = ({photo}) => {
 
   const postCaptionStyles = {
     width:'100%',
-    padding:'10px',
-    height:'100px',
+    margin:'5px 0 ',
+    padding:"0 10px",
+    height:'80px',
     whiteSpace:'wrap',
     overflow:'hidden',
     textOverflow:'ellipsis',
-    fontSize:'1rem'
+    fontSize:'0.8rem'
   }
 
   return (
