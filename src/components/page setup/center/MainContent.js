@@ -12,13 +12,13 @@ const MainContent = () => {
 
 
   const bp = facepaint([
-    '@media(min-width: 700px)',
+    '@media(min-width: 200px)',
     '@media(min-width: 999px)',
     '@media(min-width: 1000px)'
   ]);
 
   const wrapperStyles = css(bp({
-    width:"calc(100% - 250px)",
+    width:["100%","calc(100% - 230px)","calc(100% - 230px)"],
     height:'100%',
     overflowY:"scroll",
     overflowX:"hidden",

@@ -9,16 +9,16 @@ const LeftSidebar = () => {
   
 
   const bp = facepaint([
-    '@media(min-width: 700px)',
+    '@media(min-width: 200px)',
     '@media(min-width: 999px)',
     '@media(min-width: 1000px)'
   ]);
 
   const wrapperStyles = css(bp({
-    width: '250px',
+    width: '230px',
     height:'100%',
-     padding:'0 7px 0 0',
-    display:'flex',
+    padding:'0 7px 0 0',
+    display:['none','flex','flex'],
     flexDirection:'column',
     justifyContent:['flex-start', 'flex-start', 'flex-start'],
     alignItems:['center', 'center', 'center'],

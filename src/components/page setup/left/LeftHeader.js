@@ -20,8 +20,8 @@ const LeftHeader = () => {
 
 
   const logoStyles = {
-    width:'50px',
-    height:'50px',
+    width:'45px',
+    height:'45px',
     marginRight:'10px',
   }
 

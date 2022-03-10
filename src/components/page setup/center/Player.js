@@ -7,10 +7,19 @@ import { useDispatch, useSelector} from "react-redux";
 import * as audioPlayerActions from "../../../redux/actions/audioPlayerActions";
 import {RiRepeatOneFill, RiRepeat2Line} from "react-icons/ri";
 import axios from "axios";
+import { css } from "@emotion/css";
+import facepaint from "facepaint";
 
 
 
 const Player = () => {
+
+   const bp = facepaint([
+    '@media(min-width: 700px)',
+    '@media(min-width: 999px)',
+    '@media(min-width: 1000px)'
+  ]);
+
   const [playlist, setPlaylist] = useState([]);
   
   const isAnAlbum  = useSelector( state => state.playlistReducer.isAnAlbum);
@@ -293,23 +302,39 @@ const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
     alignItems:"center"
   }
 
+  const playingSong = css(bp({
+    display:["none","flex","flex"],
+    fontSize:"0.8rem",
+    justifyContent:"flex-start",
+    alignItems:"center"
+  }));
+
+  const rangeWrapper = css(bp({
+    width:["100%","100%","70%"],
+    padding:"10px 20px",
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    flexDirection:"column"
+  }))
+
 
   return (
     <Wrapper width="100%" height ="100px"  padding="10px"
     display="flex" justifyContent="space-evenly" alignItems="center"  
     > 
       
-      <Wrapper display="flex" fontSize="0.8rem" justifyContent="flex-start" alignItems="center">
+      <div className={playingSong}>
         {songImage? <img src={songImage} alt="" css={songCoverPicStyles} />:''}
         <Wrapper width="100%" display="flex" flexDirection="column">
           <h3 css={songTitleStyles}>{songTitle}</h3> 
           <p css={songTitleStyles}>{artistName}</p> 
         </Wrapper>
-      </Wrapper>
+      </div>
           
        
 
-      <Wrapper width="100%" padding="10px 20px" display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+      <div className={rangeWrapper}>
         <Wrapper width="100%" display="flex" justifyContent="center" alignItems="center" 
         fontSize="0.8rem" color="#D5EAF2">
           <p id="curreSongPostion" >0:00</p> 
@@ -359,7 +384,7 @@ const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
           </Wrapper>
           <input type="range" min="0" max="100" step="1" id="volumeSlider" onChange={changeVolume} css={volumeStyles}/>
         </Wrapper> */}
-      </Wrapper>  
+      </div>  
     </Wrapper>
   )
 }
