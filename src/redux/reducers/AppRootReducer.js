@@ -1,14 +1,10 @@
 import { combineReducers } from "redux";
-import loadComponentReducer from "./loadComponentReducer";
-import audioPlayerReducer from "./audioPlayerReducer";
-import authenticationReducer from "./authenticationReducer";
+import playerReducer from "./playerReducer";
 import searchReducer from "./searchReducer";
 import playlistReducer from "./playlistReducer";
 
 const AppRootReducer = combineReducers({
-  loadComponentReducer,
-  audioPlayerReducer,
-  authenticationReducer,
+  playerReducer,
   searchReducer,
   playlistReducer
 });

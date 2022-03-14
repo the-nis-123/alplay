@@ -12,11 +12,11 @@ const  GenreWrapper = ({genresArr}) => {
     },
     tablet: {
       breakpoint: { max: 999, min: 700 },
-      items: 4
+      items: 6
     },
     mobile: {
       breakpoint: { max: 500, min: 0 },
-      items: 3
+      items: 6
     }
 };
 

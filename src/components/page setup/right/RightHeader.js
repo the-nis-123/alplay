@@ -2,8 +2,6 @@
 import {IoMdNotifications} from "react-icons/io";
 import {RiMessage2Fill} from "react-icons/ri";
 import dp from "../../../media/pic/me.jpg"
-import { useDispatch } from "react-redux";
-import * as allModalActions from "../../../redux/actions/loadComponentActions.js";
 import { css } from "@emotion/css";
 import facepaint from "facepaint";
 
@@ -25,24 +23,24 @@ const RightHeader = () => {
   }));
 
 
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
 
-  const handleChatIconEvent = (e) => {
-    e.stopPropagation();
-    dispatch(allModalActions.showChatComponent());
-  }
+  // const handleChatIconEvent = (e) => {
+  //   e.stopPropagation();
+  //   dispatch(allModalActions.showChatComponent());
+  // }
 
-  const handleNotificationIconEvent = (e) => {
-    e.stopPropagation();
-    dispatch(allModalActions.showNotificationComponent());
-  }
+  // const handleNotificationIconEvent = (e) => {
+  //   e.stopPropagation();
+  //   dispatch(allModalActions.showNotificationComponent());
+  // }
 
 
-  const handleProfileIconEvent = (e) => {
-    e.stopPropagation();
-    dispatch(allModalActions.showProfileComponent());
-  }
+  // const handleProfileIconEvent = (e) => {
+  //   e.stopPropagation();
+  //   dispatch(allModalActions.showProfileComponent());
+  // }
 
 
   
@@ -67,9 +65,9 @@ const RightHeader = () => {
 
   return (
     < div className={wrapperStyles}>
-     <RiMessage2Fill css={IconStyles} onClick={handleChatIconEvent}/>
-     <IoMdNotifications css={IconStyles} onClick={handleNotificationIconEvent}/>
-     <img src={dp} alt="" css={dpStyles} onClick={handleProfileIconEvent}/>
+     <RiMessage2Fill css={IconStyles} />
+     <IoMdNotifications css={IconStyles} />
+     <img src={dp} alt="" css={dpStyles} />
     </div>
   )
 }

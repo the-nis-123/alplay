@@ -1,12 +1,8 @@
 /**@jsxImportSource  @emotion/react */
 import { useSelector, useDispatch } from "react-redux";
-import {RiShareForwardFill} from "react-icons/ri";
-import {ImDownload3} from "react-icons/im";
-import {MdFavorite} from "react-icons/md";
 import {
-  markSongAsFavorite, saveSongForOffline, 
-  shareThisSong, songInPlaylistDoubleClicked
-} from "../../redux/actions/audioPlayerActions";
+  songInPlaylistDoubleClicked
+} from "../../redux/actions/playerActions";
 import { css } from "@emotion/css";
 import {useEffect, useState} from "react";
 import axios from "axios";
@@ -114,13 +110,6 @@ const SearchResults = () => {
     }
   }));
 
-  const icons = css(bp({
-    margin: '5px',
-    color:'darkgreen',
-    cursor: 'pointer',
-    fontSize:'0.9rem'
-  }))
-
   const songCoverPicStyles={
     width:'40px',
     height:'40px',
@@ -183,21 +172,6 @@ const SearchResults = () => {
     dispatch(songInPlaylistDoubleClicked());
   }
 
-  let markThisSongAsFavorite = (e) => {
-    e.stopPropagation();
-    dispatch(markSongAsFavorite());
-  }
-
-  let downloadThisSong = (e) => {
-    e.stopPropagation();
-    dispatch(saveSongForOffline());
-  }
-
-  let shareSong = (e) => {
-    e.stopPropagation();
-    dispatch(shareThisSong());
-  }
-
   let close = (e) => {
     e.stopPropagation();
     dispatch(closeButton());
@@ -231,11 +205,6 @@ const SearchResults = () => {
             </div>
             <span css={album}>{song.album['title']}</span>
             <p css={duration}>
-              <span id="songActions">
-                <ImDownload3 className={icons} onClick={downloadThisSong}/>
-                <MdFavorite className={icons} onClick={markThisSongAsFavorite}/>
-                <RiShareForwardFill className={icons} onClick={shareSong}/>
-              </span>
               <span>
                 {Math.floor(song.duration / 60)+ ':' + song.duration % 60}
               </span>

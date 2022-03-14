@@ -12,9 +12,17 @@ export const shareThisSong = ()=>{
 }
 
 
-export const songCollectionClicked = (songsList)=>{
+export const playlistClicked = (songsList)=>{
   return {
-    type:'SHOW_CLICKED_SONGS_COLLECTION',
+    type:'SHOW_SONGS_IN_CLICKED_PLAYLIST',
+    payload:songsList
+  }
+}
+
+
+export const albumClicked = (songsList)=>{
+  return {
+    type:'SHOW_SONGS_IN_CLICKED_ALBUM',
     payload:songsList
   }
 }
@@ -32,7 +40,7 @@ export const songInPlaylistDoubleClicked = ()=>{
 
 export const playAplaylist = (playlistId)=>{
   return {
-    type:'LOAD_AND_PLAY_A_PLAYLIST',
+    type:'LOAD_AND_PLAY_THIS_PLAYLIST',
     payload:playlistId
   }
 }
@@ -40,7 +48,7 @@ export const playAplaylist = (playlistId)=>{
 
 export const playAnAlbum = (albumId)=>{
   return {
-    type:'LOAD_AND_PLAY_AN_ALBUM',
+    type:'LOAD_AND_PLAY_THIS_ALBUM',
     payload:albumId
   }
 }

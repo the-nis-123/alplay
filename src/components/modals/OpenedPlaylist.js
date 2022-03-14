@@ -1,7 +1,7 @@
 /**@jsxImportSource  @emotion/react */
 import { useSelector, useDispatch } from "react-redux";
 import { songInPlaylistDoubleClicked
-} from "../../redux/actions/audioPlayerActions";
+ } from "../../redux/actions/playerActions";
 import { css } from "@emotion/css";
 import facepaint from "facepaint";
 import {closeButton} from "../../redux/actions/otherActions";
@@ -18,7 +18,7 @@ const OpenedPlaylist = () => {
   ]);
  
   let songslist = useSelector(state => state.playlistReducer.playlistToShow);
-  
+
   console.log(songslist);
 
   const wrapperStyles={
@@ -80,8 +80,6 @@ const OpenedPlaylist = () => {
     }
   }));
 
- 
-
   const songCoverPicStyles={
     width:'40px',
     height:'40px',
@@ -141,7 +139,7 @@ const OpenedPlaylist = () => {
   //song double clicked, play import PropTypes from 'prop-types'
   let songDoubleClicked = (e) => {
     e.stopPropagation();
-    dispatch(songInPlaylistDoubleClicked());
+    dispatch(songInPlaylistDoubleClicked(e.target.key));
   }
 
   
@@ -161,28 +159,31 @@ const OpenedPlaylist = () => {
         <span onClick={close} css={closebutton}>X</span>
       </h3>
       <ul css={listContainerStyles}>
-        { songslist.length > 0 ?
-          songslist.map(song => 
-          <li key={song.id} className={listStyles} 
-          onDoubleClick={songDoubleClicked}
-          >  
-            <div css={title}>
-              <span css={numbered}>
-                {songslist.indexOf(song) + 1}
-              </span>
-              <img src={song.album['cover']} alt="" css={songCoverPicStyles} />
-              <p>
-                <span css={boldDetails}>{song.title}</span>
-                <br/>
-                <span>{song.artist['name']}</span>
+
+        {
+         songslist.length > 0 ?
+            songslist.map(song => 
+            <li key={song.id} className={listStyles} 
+              onDoubleClick={songDoubleClicked}
+            >  
+              <div css={title}>
+                <span css={numbered}>
+                  {songslist.indexOf(song) + 1}
+                </span>
+                <img src={song.album['cover']} alt="" css={songCoverPicStyles} />
+                <p>
+                  <span css={boldDetails}>{song.title}</span>
+                  <br/>
+                  <span>{song.artist['name']}</span>
+                </p>
+              </div>
+              <span css={album}>{song.album['title']}</span>
+              <p css={duration}>
+                  {Math.floor(song.duration / 60)+ ':' + song.duration % 60}
               </p>
-            </div>
-            <span css={album}>{song.album['title']}</span>
-            <p css={duration}>
-                {Math.floor(song.duration / 60)+ ':' + song.duration % 60}
-            </p>
-          </li>
-          ):""}
+            </li>
+          ):"loading"
+        }
       </ul>
     </div>
   )

@@ -3,11 +3,20 @@ import { initialAppState } from "../../App";
 const playlistReducer = (state=initialAppState, action) => {
   switch (action.type){
 
-    case 'SHOW_CLICKED_SONGS_COLLECTION':
+    case 'SHOW_SONGS_IN_CLICKED_ALBUM':
+      return {
+        ...state,
+        tracklistToShow:action.payload,
+        showAplaylist:false,
+        showAnAlbum:true,
+      }
+
+    case 'SHOW_SONGS_IN_CLICKED_PLAYLIST':
       return {
         ...state,
         playlistToShow:action.payload,
-        songsCollection:true,
+        showAplaylist:true,
+        showAnAlbum:false,
       }
     
     case 'LOAD_AND_PLAY_A_PLAYLIST':
@@ -30,9 +39,9 @@ const playlistReducer = (state=initialAppState, action) => {
     case 'CLOZE_MODAL':
        return {
         ...state,
-        showPlaylist:false,
+        showAPlaylist:false,
         searchValue:"",
-        songsCollection:false,
+        showAnAlbum:false,
       }
     default:
       return state;

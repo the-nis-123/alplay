@@ -9,7 +9,7 @@ const LeftSidebar = () => {
   
 
   const bp = facepaint([
-    '@media(min-width: 200px)',
+    '@media(min-width: 500px)',
     '@media(min-width: 999px)',
     '@media(min-width: 1000px)'
   ]);

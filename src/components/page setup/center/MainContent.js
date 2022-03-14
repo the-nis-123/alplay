@@ -7,12 +7,13 @@ import { useSelector } from "react-redux";
 import { css } from "@emotion/css";
 import facepaint from "facepaint";
 import SearchResults from "../../modals/SearchResults";
+import OpenedAlbum from "../../modals/OpenedAlbum";
 
 const MainContent = () => {
 
 
   const bp = facepaint([
-    '@media(min-width: 200px)',
+    '@media(min-width: 500px)',
     '@media(min-width: 999px)',
     '@media(min-width: 1000px)'
   ]);
@@ -32,17 +33,17 @@ const MainContent = () => {
 
   let menu = useSelector(state=>state.searchReducer.homeMenu);
   let search = useSelector(state=>state.searchReducer.searchValue);
-  let playlist = useSelector(state=>state.audioPlayerReducer.showPlaylist);
-  let songsList = useSelector(state=>state.playlistReducer.songsCollection);
+  let showAPlaylist = useSelector(state=>state.playlistReducer.showAPlaylist);
+  let showAnAlbum = useSelector(state=>state.playlistReducer.showAnAlbum);
 
   return (
     <div className={wrapperStyles}
     >
-      <Wrapper width="100%" height ="calc(100% - 100px)" position="relative">
+      <Wrapper width="100%" height ="calc(100% - 80px)" position="relative">
        { menu && <AlplayCategoryContainers/>}
        { search && <SearchResults/>} 
-       { playlist && <OpenedPlaylist/>}
-        { songsList && <OpenedPlaylist/>}
+       { showAnAlbum && <OpenedAlbum/>}
+       { showAPlaylist && <OpenedPlaylist/>}
       </Wrapper>
       <Player/>
     </div>

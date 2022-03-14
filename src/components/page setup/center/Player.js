@@ -1,55 +1,55 @@
 /**@jsxImportSource @emotion/react */
-import { useEffect, useState } from "react";
 import Wrapper from "../../global components/Wrapper";
-import {IoMdPause, IoMdPlay,IoMdSkipBackward, IoMdSkipForward, IoMdShuffle, IoMdVolumeMute, IoMdVolumeHigh} from "react-icons/io";
-import {RiPlayListFill} from "react-icons/ri";
+import {IoMdPause, IoMdPlay,IoMdSkipBackward, IoMdSkipForward, IoMdShuffle} from "react-icons/io";
 import { useDispatch, useSelector} from "react-redux";
-import * as audioPlayerActions from "../../../redux/actions/audioPlayerActions";
+import * as playerActions from "../../../redux/actions/playerActions";
 import {RiRepeatOneFill, RiRepeat2Line} from "react-icons/ri";
 import axios from "axios";
+import { useState, useEffect } from "react";
 import { css } from "@emotion/css";
 import facepaint from "facepaint";
-
-
 
 const Player = () => {
 
    const bp = facepaint([
-    '@media(min-width: 700px)',
+    '@media(min-width: 200px)',
     '@media(min-width: 999px)',
     '@media(min-width: 1000px)'
   ]);
 
-  const [playlist, setPlaylist] = useState([]);
-  
-  const isAnAlbum  = useSelector( state => state.playlistReducer.isAnAlbum);
-  const isAplaylist  = useSelector( state => state.playlistReducer.isAplaylist);
-  const loadedPlaylistId  = useSelector( state => state.playlistReducer.loadedPlaylistId);
+const [playlist, setPlaylist] = useState({});
+const [songTitle, setSongTitle] = useState('');  
+const [songCover, setSongCover] = useState('');  
+const [artistName, setArtistName] = useState('');
+const [songDuration, setSongDuration] = useState('');
+const [songIndex, setSongIndex] = useState(0);      
 
-  useEffect( () => {
+let {isAnAlbum, isAPlaylist, playlistIDfromUser} = useSelector(state => state.playerReducer); 
 
-    if(isAplaylist && !isAnAlbum){
-      const options = {
-        method: 'GET',
-        url: `https://deezerdevs-deezer.p.rapidapi.com/playlist/${loadedPlaylistId}`,
-        headers: {
-          'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
-          'x-rapidapi-key': '2ce6541653msh6b3fb4d89eb2d48p1bcea1jsn8ce75a4064a4'
-        }
-      };
-
-      axios.request(options).then(function (response) {
-        let returnedPlaylist = response.data;
-        setPlaylist(returnedPlaylist.tracks.data);
-        console.log(returnedPlaylist.tracks.data);
-      }).catch(function (error) {
-        console.error(error);
-      });
-    }
-    else if(isAnAlbum && !isAplaylist){
-       const options = {
+useEffect( () => {
+  if(!isAnAlbum && isAPlaylist){
+     const options = {
       method: 'GET',
-      url: `https://deezerdevs-deezer.p.rapidapi.com/album/${loadedPlaylistId}`,
+      url: `https://deezerdevs-deezer.p.rapidapi.com/playlist/${playlistIDfromUser}`,
+      headers: {
+        'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
+        'x-rapidapi-key': '2ce6541653msh6b3fb4d89eb2d48p1bcea1jsn8ce75a4064a4'
+      }
+    };
+
+    axios.request(options).then(function (response) {
+      let returnedPlaylist = response.data;
+      let songslist = returnedPlaylist.tracks.data;
+      setPlaylist(songslist);
+      console.log(songslist);
+    }).catch(function (error) {
+      console.error(error);
+    })
+
+  }else if(!isAPlaylist && isAnAlbum){
+      const options = {
+      method: 'GET',
+      url: `https://deezerdevs-deezer.p.rapidapi.com/album/${playlistIDfromUser}`,
       headers: {
         'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
         'x-rapidapi-key': '2ce6541653msh6b3fb4d89eb2d48p1bcea1jsn8ce75a4064a4'
@@ -58,199 +58,80 @@ const Player = () => {
 
     axios.request(options).then(function (response) {
       let returnedAlbum = response.data;
-      setPlaylist(returnedAlbum.tracks);
-      console.log(returnedAlbum);
+      const songslist = returnedAlbum.tracks.data;
+      setPlaylist(songslist);
+      setSongCover(songslist[songIndex].picture);
+      setSongDuration(songslist[songIndex].duration);
+      setSongTitle(songslist[songIndex].name);
+      setArtistName(songslist[songIndex].artist['name']);
+      console.log(songslist);
     }).catch(function (error) {
-      console.error(error);});
-    }else{
-      console.log("playlist not found");
-    }
-  }, [loadedPlaylistId, isAnAlbum,isAplaylist]);
+      console.error(error);
+    })
 
-  
-
-  
-let audioTrack, volumeBar, seekBar;
-audioTrack = document.createElement('audio');
-//load track
-const loadSong = (index) => {
-  if(playlist){
-    let loadedPlaylist = playlist;
-    audioTrack.src= loadedPlaylist[index].link;
   }else{
-    console.log('something went wrong');
+    console.log('playlist not found');
   }
-}
 
-//loadSong(0);
+}, [playlistIDfromUser, isAnAlbum, isAPlaylist]);
 
-// //change volume
-// volumeBar = document.getElementById('volumeSlider');
-// const setVolume  = () => {
-//   audioTrack.volume = volumeBar.value / 100;
-// }
-
-
-// //seek in song
-// seekBar = document.getElementById('songSlider');
-
-// const seek  = () => {
-//   let seekto = (seekBar.value/100) * audioTrack.duration;
-//   audioTrack.currentTime = seekto;
-// }
-
-// //play next song
-// const playNext = (state, index) => {
-//   if(index < state.chosenPlaylist.length - 1){
-//     loadSong(index + 1);
-//     audioTrack.play();
-//     return index + 1;
-//   }else{
-//     index = 0;
-//     loadSong(index);
-//     audioTrack.play();
-//     return index;
-//   }
-// }
-
-// //play previous song
-// const playPrevious = (state, index) => {
-//   if(index > 0 && index < state.chosenPlaylist.length){
-//     loadSong(index - 1);
-//     audioTrack.play();
-//     return index - 1;
-//   }else{
-//     loadSong(state.chosenPlaylist.length - 1);
-//     audioTrack.play();
-//     return state.chosenPlaylist.length - 1;
-//   }
-// }
-
-
-
-const songTime = playlist.length !== 0 ? Math.floor(playlist[0].duration / 60).toString() + ':' +( playlist[0].duration % 60).toString() :'0:00';
-const songTitle = playlist.length !== 0 ? playlist[0].title : '';
-const artistName = playlist.length !== 0 ? playlist[0].artist['name'] :'';
-const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// const songTime = playlist.length !== 0 ? Math.floor(playlist[0].duration / 60).toString() + ':' +( playlist[0].duration % 60).toString() :'0:00';
+// const songTitle = playlist.length !== 0 ? playlist[0].title : '';
+// const artistName = playlist.length !== 0 ? playlist[0].artist['name'] :'';
+// const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
 
   //Play functionality implementations
   const dispatch = useDispatch();
   const playSong = (e) => {
     e.stopPropagation();
-    dispatch(audioPlayerActions.playButtonPressed());
+    dispatch(playerActions.playButtonPressed(playlist, songIndex));
   }
 
   const pauseSong = (e)=>{
     e.stopPropagation();
-    dispatch(audioPlayerActions.pauseButtonPressed());
+    dispatch(playerActions.pauseButtonPressed());
   }
 
   const shuffleSongs = (e) => {
     e.stopPropagation();
-    dispatch(audioPlayerActions.shuffleButtonPressed());
+    dispatch(playerActions.shuffleButtonPressed());
   }
 
 
   const shuffleSongsOff = (e) => {
     e.stopPropagation();
-    dispatch(audioPlayerActions.shuffleButtonOffPressed());
+    dispatch(playerActions.shuffleButtonOffPressed());
   }
 
   const nextSong = (e)=>{
     e.stopPropagation();
-    dispatch(audioPlayerActions.nextSongButtonPressed());
+    dispatch(playerActions.nextSongButtonPressed());
   }
 
   const previousSong = (e) => {
     e.stopPropagation();
-    dispatch(audioPlayerActions.previousSongButtonPressed());
+    dispatch(playerActions.previousSongButtonPressed());
   }
 
-  const unmuteSong = (e) => {
-    e.stopPropagation();
-    dispatch(audioPlayerActions.muteButtonPressed());
-  }
-
-  const muteSong = (e) =>{
-    e.stopPropagation();
-    dispatch(audioPlayerActions.volumeButtonPressed());
-  }
-
-  const showPlaylist = (e) => {
-    e.stopPropagation();
-    dispatch(audioPlayerActions.playlistButtonPressed());
-  }
-
-  const hidePlaylist = (e) => {
-    e.stopPropagation();
-    dispatch(audioPlayerActions.hidePlaylistButtonPressed());
-  }
-
-  const changeVolume = (e) =>{
-    e.stopPropagation();
-    dispatch(audioPlayerActions.songVolumeSliderMoved());
-  }
-
-  const changeSongPosition = (e) =>{
-    e.stopPropagation();
-    dispatch(audioPlayerActions.songDurationSliderMoved());
-  }
-  
   const repeatCurrentSong = (e)=> {
     e.stopPropagation();
-    dispatch(audioPlayerActions.songRepeatButtonPressed());
+    dispatch(playerActions.songRepeatButtonPressed());
   }
 
   const repeatCurrentPlaylist = (e) => {
     e.stopPropagation();
-    dispatch(audioPlayerActions.repeatAllSongsButtonPressed())
+    dispatch(playerActions.repeatAllSongsButtonPressed())
   }
 
   const repeatIsOff = (e)=>{
     e.stopPropagation();
-    dispatch(audioPlayerActions.songRepeatOff());
+    dispatch(playerActions.songRepeatOff());
   }
   
 
   const {isPlaying, repeatOff, repeatOneSong, repeatPlaylist, 
-    shuffleButton, volumeOn, showCurrentPlaylist, songIndex 
-    } = useSelector( state => state.audioPlayerReducer );
-
- 
+    shuffleButton 
+    } = useSelector( state => state.playerReducer );
 
   //Player Stylings
   const playerIconStyles = {
@@ -261,9 +142,6 @@ const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
     cursor:'pointer'
   }
 
-  const volumeStyles = {
-    width:'60px !important'
-  }
 
   const playerActiveIconStyles = {
     fontSize:'0.8rem',
@@ -306,26 +184,27 @@ const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
     display:["none","flex","flex"],
     fontSize:"0.8rem",
     justifyContent:"flex-start",
-    alignItems:"center"
+    alignItems:"center",
   }));
 
   const rangeWrapper = css(bp({
     width:["100%","100%","70%"],
+    height:"100%",
     padding:"10px 20px",
     display:"flex",
-    justifyContent:"center",
+    justifyContent:"space-between",
     alignItems:"center",
     flexDirection:"column"
   }))
 
 
   return (
-    <Wrapper width="100%" height ="100px"  padding="10px"
-    display="flex" justifyContent="space-evenly" alignItems="center"  
+    <Wrapper width="100%" height ="80px"  padding="0 10px"
+    display="flex" justifyContent="center" alignItems="center"  
     > 
       
       <div className={playingSong}>
-        {songImage? <img src={songImage} alt="" css={songCoverPicStyles} />:''}
+        {songCover? <img src={songCover} alt="" css={songCoverPicStyles} />:''}
         <Wrapper width="100%" display="flex" flexDirection="column">
           <h3 css={songTitleStyles}>{songTitle}</h3> 
           <p css={songTitleStyles}>{artistName}</p> 
@@ -338,52 +217,37 @@ const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
         <Wrapper width="100%" display="flex" justifyContent="center" alignItems="center" 
         fontSize="0.8rem" color="#D5EAF2">
           <p id="curreSongPostion" >0:00</p> 
-          <input type="range" min="0"  max="100" step="1" id="songSlider" value="0" onChange={changeSongPosition}/>
-          <p id="songDuration">{songTime}</p>
+          <input type="range" min="0"  max="100" step="1" id="songSlider" />
+          <p id="songDuration">{songDuration}</p>
         </Wrapper>
       
-        <Wrapper display="flex" justifyContent="center" alignItems="center">
-          <Wrapper display="flex" justifyContent="center" alignItems="center">
-            {shuffleButton && <IoMdShuffle css={playerActiveIconStyles} onClick={shuffleSongsOff}/>}
-            {!shuffleButton && <IoMdShuffle css={playerIconStyles} onClick={shuffleSongs}/>}
-          </Wrapper>
+        <Wrapper width="100%" display="flex" justifyContent="space-between" alignItems="center">
+          <RiRepeat2Line css={playerIconStyles}  onClick={repeatCurrentSong}/>
           
-          <IoMdSkipBackward css={playerIconStyles} onClick={previousSong} />
-          <div css={playButtonWrapper} >
-            {isPlaying && <IoMdPause css={playerIconStyles} onClick={pauseSong}/> }
-            {!isPlaying && <IoMdPlay css={playerIconStyles} onClick={playSong}/> }  
-          </div>
-          <IoMdSkipForward css={playerIconStyles} onClick={nextSong} />
+          <Wrapper width="100%" display="flex" justifyContent="center" alignItems="center">  
+            <Wrapper display="flex" justifyContent="center" alignItems="center">
+              {shuffleButton && <IoMdShuffle css={playerActiveIconStyles} onClick={shuffleSongsOff}/>}
+              {!shuffleButton && <IoMdShuffle css={playerIconStyles} onClick={shuffleSongs}/>}
+            </Wrapper>
+            
+            <IoMdSkipBackward css={playerIconStyles} onClick={previousSong} />
+            <div css={playButtonWrapper} >
+              {isPlaying && <IoMdPause css={playerIconStyles} onClick={pauseSong}/> }
+              {!isPlaying && <IoMdPlay css={playerIconStyles} onClick={playSong}/> }  
+            </div>
+            <IoMdSkipForward css={playerIconStyles} onClick={nextSong} />
 
-          <Wrapper display="flex" justifyContent="center" alignItems="center">
-            {repeatOneSong && <RiRepeatOneFill css={playerActiveIconStyles}  onClick={repeatCurrentPlaylist}/>}
-            {repeatPlaylist && <RiRepeat2Line css={playerActiveIconStyles} onClick={repeatIsOff}/>} 
-            {repeatOff && <RiRepeat2Line css={playerIconStyles}  onClick={repeatCurrentSong}/>}
-          </Wrapper>
-        </Wrapper>
-
-        {/* <Wrapper display="flex" justifyContent="center" alignItems="center"> 
-          <Wrapper display="flex" justifyContent="center" alignItems="center" width="calc(100% - 60px) !important">
             <Wrapper display="flex" justifyContent="center" alignItems="center">
               {repeatOneSong && <RiRepeatOneFill css={playerActiveIconStyles}  onClick={repeatCurrentPlaylist}/>}
               {repeatPlaylist && <RiRepeat2Line css={playerActiveIconStyles} onClick={repeatIsOff}/>} 
               {repeatOff && <RiRepeat2Line css={playerIconStyles}  onClick={repeatCurrentSong}/>}
             </Wrapper>
-            <Wrapper display="flex" justifyContent="center" alignItems="center">
-              {shuffleButton && <IoMdShuffle css={playerActiveIconStyles} onClick={shuffleSongsOff}/>}
-              {!shuffleButton && <IoMdShuffle css={playerIconStyles} onClick={shuffleSongs}/>}
-            </Wrapper>
-            <Wrapper display="flex" justifyContent="center" alignItems="center">
-              {showCurrentPlaylist ? <RiPlayListFill css={playerActiveIconStyles} onClick={hidePlaylist}/> :
-              <RiPlayListFill css={playerIconStyles} onClick={showPlaylist}/>}
-            </Wrapper>
-            <Wrapper display="flex" justifyContent="center" alignItems="center">
-              {!volumeOn && <IoMdVolumeMute css={playerIconStyles} onClick={unmuteSong}/> }
-              {volumeOn && <IoMdVolumeHigh css={playerIconStyles} onClick={muteSong}/>}
-            </Wrapper>
           </Wrapper>
-          <input type="range" min="0" max="100" step="1" id="volumeSlider" onChange={changeVolume} css={volumeStyles}/>
-        </Wrapper> */}
+{/* 
+          <Wrapper display="flex" justifyContent="center" alignItems="center"> 
+            <input type="range" min="0" max="100" step="1" id="volumeSlider" css={volumeStyles}/>
+          </Wrapper> */}
+        </Wrapper>
       </div>  
     </Wrapper>
   )

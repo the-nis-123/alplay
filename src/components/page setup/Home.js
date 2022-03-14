@@ -2,7 +2,6 @@
 import Wrapper from '../global components/Wrapper';
 import LeftSidebar from '../page setup/left/LeftSidebar';
 import MainContent from '../page setup/center/MainContent';
-import RightSidebar from '../page setup/right/RightSidebar';
 import Header from '../global components/Header';
 import facepaint from 'facepaint';
 import { css } from '@emotion/css';

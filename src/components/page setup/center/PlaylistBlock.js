@@ -4,8 +4,8 @@ import CategoryReactions from "./CategoryReactions";
 import axios from "axios";
 import {useDispatch} from "react-redux";
 import {IoMdPause, IoMdPlay} from "react-icons/io";
-import {pauseButtonPressed} from "../../../redux/actions/audioPlayerActions";
-import {playAplaylist, songCollectionClicked} from "../../../redux/actions/playlistActions";
+import {pauseButtonPressed} from "../../../redux/actions/playerActions";
+import {playAplaylist, playlistClicked} from "../../../redux/actions/playlistActions";
 
 
 const PlaylistBlock = ({playlistId}) => {
@@ -24,7 +24,6 @@ const PlaylistBlock = ({playlistId}) => {
     padding:'10px',
     borderRadius:"5px",
     position:"relative",
-    //background:"linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6))", 
     '&:hover':{
       cursor:"pointer",
       backgroundColor: 'rgba(10, 61, 0, 0.3)',
@@ -69,7 +68,8 @@ const PlaylistBlock = ({playlistId}) => {
   let dispatch = useDispatch();
 
   let pauseCategory = (e) => {
-     e.stopPropagation();
+    e.stopPropagation();
+    setIsPlaying(false);
     dispatch(pauseButtonPressed());
   }
 
@@ -81,7 +81,7 @@ const PlaylistBlock = ({playlistId}) => {
  
   let openThisCategory = (e) => {
     e.stopPropagation();
-    dispatch(songCollectionClicked(songsList));
+    dispatch(playlistClicked(songsList));
   }
 
   useEffect(()=>{
@@ -97,7 +97,6 @@ const PlaylistBlock = ({playlistId}) => {
     axios.request(options).then(function (response) {
       let returnedPlaylist = response.data;
       setPlaylist(returnedPlaylist);
-      //console.log(returnedPlaylist.tracks.data);
       setSongsList(returnedPlaylist.tracks.data);
     }).catch(function (error) {
       console.error(error);

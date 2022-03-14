@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import {IoMdPause, IoMdPlay} from "react-icons/io";
 import {useDispatch, useSelector} from "react-redux";
-import {playButtonPressed, pauseButtonPressed} from "../../../redux/actions/audioPlayerActions";
+import {playAplaylist} from "../../../redux/actions/playlistActions";
+import {pauseButtonPressed} from "../../../redux/actions/playerActions";
 
 
 const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
@@ -88,11 +89,11 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
 
   let playCategory = (e) => {
      e.stopPropagation();
-    dispatch(playButtonPressed());
+    dispatch(playAplaylist());
   }
 
   
-  const { isPlaying } = useSelector(state => state.audioPlayerReducer);
+  const { isPlaying } = useSelector(state => state.playerReducer);
 
 
   return(

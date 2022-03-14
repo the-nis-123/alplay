@@ -4,14 +4,13 @@ import CategoryReactions from "./CategoryReactions";
 import {IoMdPause, IoMdPlay} from "react-icons/io";
 import { useDispatch} from "react-redux";
 import axios from "axios";
-import {playAnAlbum, songCollectionClicked} from "../../../redux/actions/playlistActions";
-import {pauseButtonPressed} from "../../../redux/actions/audioPlayerActions";
+import {playAnAlbum, albumClicked} from "../../../redux/actions/playlistActions";
+import {pauseButtonPressed} from "../../../redux/actions/playerActions";
 
 const AlbumBlock = ({albumId}) => {
 
   
   const [album, setAlbum] = useState({});
-  const [songsList, setSongsList] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   
   const categoryStyles = {
@@ -22,13 +21,29 @@ const AlbumBlock = ({albumId}) => {
     backgroundColor:'rgba(10, 61, 0, 0.2)',
     padding:'10px',
     borderRadius:'5px',
-    //background:"linear-gradient(rgba(3, 61, 0, 0.1), rgba(0,0,0,0.6))", 
+  
     '&:hover':{
       cursor:"pointer",
       backgroundColor:'rgba(10, 61, 0, 0.3)',
       '#playpause':{
        display:'flex'
       }
+    }
+  }
+
+   const categoryPlayingStyles = {
+    width:'240px',
+    height:'320px',
+    position:'relative',
+    margin: '5px',
+    backgroundColor:'rgba(10, 61, 0, 0.2)',
+    padding:'10px',
+    borderRadius:'5px',
+   
+    cursor:"pointer",
+    '&:#backgroundColor':'rgba(10, 61, 0, 0.3)',
+    '#playpause':{
+      display:'flex'
     }
   }
 
@@ -67,7 +82,8 @@ const AlbumBlock = ({albumId}) => {
   let dispatch = useDispatch();
 
   let pauseCategory = (e) => {
-     e.stopPropagation();
+    e.stopPropagation();
+    setIsPlaying(false);
     dispatch(pauseButtonPressed());
   }
 
@@ -79,7 +95,7 @@ const AlbumBlock = ({albumId}) => {
   
   let openThisCategory = (e) => {
     e.stopPropagation();
-    dispatch(songCollectionClicked(songsList));
+    dispatch(albumClicked(album));
   }
  
   
@@ -97,8 +113,6 @@ const AlbumBlock = ({albumId}) => {
     axios.request(options).then(function (response) {
       let returnedAlbum = response.data;
       setAlbum(returnedAlbum);
-      //console.log(returnedAlbum);
-      setSongsList(returnedAlbum.tracks);
     }).catch(function (error) {
       console.error(error);
     });}, [albumId]
@@ -106,7 +120,7 @@ const AlbumBlock = ({albumId}) => {
 
 
   return (
-    <div onDoubleClick={openThisCategory} css={categoryStyles}>
+    <div onDoubleClick={openThisCategory} css={ isPlaying? categoryPlayingStyles : categoryStyles}>
       {album.cover_medium?<img src={album.cover_medium} alt="" css={imageStyles}/>:''}
       {album.title?<CategoryReactions categoryName={album.title}/>:''}
       <div id="playpause" css={playpauseStyles}>

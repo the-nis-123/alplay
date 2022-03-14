@@ -7,7 +7,7 @@ import facepaint from "facepaint";
 const  MiniCategoryBlock = ({itemsArr}) => {
   
   const bp = facepaint([
-    '@media(min-width: 500px)',
+    '@media(min-width: 260px)',
     '@media(min-width: 999px)',
     '@media(min-width: 1000px)'
   ]);
