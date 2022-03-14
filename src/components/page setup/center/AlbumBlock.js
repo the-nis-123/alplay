@@ -83,8 +83,8 @@ const AlbumBlock = ({albumId}) => {
 
   let pauseCategory = (e) => {
     e.stopPropagation();
-    setIsPlaying(false);
     dispatch(pauseButtonPressed());
+    setIsPlaying(false);
   }
 
   let playCategory = (e) => {

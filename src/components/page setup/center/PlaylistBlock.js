@@ -69,14 +69,14 @@ const PlaylistBlock = ({playlistId}) => {
 
   let pauseCategory = (e) => {
     e.stopPropagation();
-    setIsPlaying(false);
     dispatch(pauseButtonPressed());
+    setIsPlaying(false);
   }
 
   let playCategory = (e) => {
      e.stopPropagation();
-     setIsPlaying(true);
      dispatch(playAplaylist(playlistId));
+     setIsPlaying(true);
   }
  
   let openThisCategory = (e) => {

@@ -2,12 +2,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import {IoMdPause, IoMdPlay} from "react-icons/io";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {playAplaylist} from "../../../redux/actions/playlistActions";
 import {pauseButtonPressed} from "../../../redux/actions/playerActions";
 
 
 const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  
   const wrapperTwo = {
     width: '100%',
     height:"80px",
@@ -70,7 +72,6 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
       let returnedPlaylist = response.data;
       setPlaylist(returnedPlaylist);
       //console.log(returnedPlaylist);
-      //setSongsList(returnedPlaylist);
     }).catch(function (error) {
       console.error(error);
     });
@@ -85,16 +86,16 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
   let pauseCategory = (e) => {
      e.stopPropagation();
     dispatch(pauseButtonPressed());
+    setIsPlaying(false);
   }
 
   let playCategory = (e) => {
      e.stopPropagation();
     dispatch(playAplaylist());
+    setIsPlaying(true);
   }
 
-  
-  const { isPlaying } = useSelector(state => state.playerReducer);
-
+ 
 
   return(
     <div css={wrapperTwo} key={playlistId}>

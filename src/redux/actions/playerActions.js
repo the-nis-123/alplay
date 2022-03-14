@@ -30,11 +30,24 @@ export const shuffleButtonOffPressed = () =>{
 }
 
 
-export const nextSongButtonPressed  = () =>{
-  
+export const nextSongButtonPressed  = (playlist,songindex) =>{
+  return{
+    type:"PLAY_NEXT_SONG",
+    payload:{
+      songindex:songindex,
+      playlist:playlist
+    }
+  }
 }
 
-export const previousSongButtonPressed = () =>{
+export const previousSongButtonPressed = (playlist,songindex) =>{
+   return{
+    type:"PLAY_PREVIOUS_SONG",
+    payload:{
+      songindex:songindex,
+      playlist:playlist
+    }
+  }
   
 }
 

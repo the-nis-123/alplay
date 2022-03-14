@@ -18,6 +18,7 @@ const Player = () => {
   ]);
 
 const [playlist, setPlaylist] = useState({});
+const [albumObject, setAlbumObject] = useState({});
 const [songTitle, setSongTitle] = useState('');  
 const [songCover, setSongCover] = useState('');  
 const [artistName, setArtistName] = useState('');
@@ -41,7 +42,10 @@ useEffect( () => {
       let returnedPlaylist = response.data;
       let songslist = returnedPlaylist.tracks.data;
       setPlaylist(songslist);
-      console.log(songslist);
+      setSongCover(songslist[0].album['cover']);
+      setSongDuration(songslist[0].duration);
+      setSongTitle(songslist[0].title);
+      setArtistName(songslist[0].artist['name']);
     }).catch(function (error) {
       console.error(error);
     })
@@ -59,12 +63,12 @@ useEffect( () => {
     axios.request(options).then(function (response) {
       let returnedAlbum = response.data;
       const songslist = returnedAlbum.tracks.data;
+      setAlbumObject(returnedAlbum);
       setPlaylist(songslist);
-      setSongCover(songslist[songIndex].picture);
-      setSongDuration(songslist[songIndex].duration);
-      setSongTitle(songslist[songIndex].name);
-      setArtistName(songslist[songIndex].artist['name']);
-      console.log(songslist);
+      setSongCover(returnedAlbum.cover);
+      setSongDuration(songslist[0].duration);
+      setSongTitle(songslist[0].title);
+      setArtistName(songslist[0].artist['name']);
     }).catch(function (error) {
       console.error(error);
     })
@@ -75,10 +79,6 @@ useEffect( () => {
 
 }, [playlistIDfromUser, isAnAlbum, isAPlaylist]);
 
-// const songTime = playlist.length !== 0 ? Math.floor(playlist[0].duration / 60).toString() + ':' +( playlist[0].duration % 60).toString() :'0:00';
-// const songTitle = playlist.length !== 0 ? playlist[0].title : '';
-// const artistName = playlist.length !== 0 ? playlist[0].artist['name'] :'';
-// const songImage = playlist.length !== 0 ? playlist[0].album['cover'] : '';
 
   //Play functionality implementations
   const dispatch = useDispatch();
@@ -97,7 +97,6 @@ useEffect( () => {
     dispatch(playerActions.shuffleButtonPressed());
   }
 
-
   const shuffleSongsOff = (e) => {
     e.stopPropagation();
     dispatch(playerActions.shuffleButtonOffPressed());
@@ -105,12 +104,74 @@ useEffect( () => {
 
   const nextSong = (e)=>{
     e.stopPropagation();
-    dispatch(playerActions.nextSongButtonPressed());
+    if(songIndex === playlist.length - 1 && isAPlaylist){
+      setSongIndex(0);
+      setSongCover(playlist[songIndex].album['cover']);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
+    }
+    else if(songIndex < playlist.length - 1 && isAPlaylist){
+      setSongIndex(songIndex + 1);
+      setSongCover(playlist[songIndex].album['cover']);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
+    }
+    else if(songIndex === playlist.length - 1 && isAnAlbum){
+      setSongIndex(0);
+      setSongCover(albumObject.cover);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
+    }else{
+      setSongIndex(songIndex + 1);
+      setSongCover(albumObject.cover);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
+    }
+    dispatch(playerActions.nextSongButtonPressed(playlist, songIndex));
   }
 
   const previousSong = (e) => {
     e.stopPropagation();
-    dispatch(playerActions.previousSongButtonPressed());
+    
+    if(songIndex > 0 && isAPlaylist){
+      setSongIndex(songIndex - 1);
+      setSongCover(playlist[songIndex].album['cover']);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
+    }
+    else if(songIndex === 0 && isAPlaylist){
+      setSongIndex(playlist.length - 1);
+      setSongCover(playlist[songIndex].album['cover']);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
+    }
+    else if(songIndex > 0 && isAnAlbum){
+      setSongIndex(songIndex - 1);
+      setSongCover(albumObject.cover);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
+    }else{
+      setSongIndex(playlist.length - 1);
+      setSongCover(albumObject.cover);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
+    }
+
+    if(songIndex > 0){
+      setSongIndex(songIndex - 1);
+    }
+    else{
+      setSongIndex(playlist.length - 1);
+    }
+     dispatch(playerActions.previousSongButtonPressed(playlist, songIndex));
   }
 
   const repeatCurrentSong = (e)=> {
@@ -128,7 +189,6 @@ useEffect( () => {
     dispatch(playerActions.songRepeatOff());
   }
   
-
   const {isPlaying, repeatOff, repeatOneSong, repeatPlaylist, 
     shuffleButton 
     } = useSelector( state => state.playerReducer );
@@ -141,7 +201,6 @@ useEffect( () => {
     color:'#D1B894',
     cursor:'pointer'
   }
-
 
   const playerActiveIconStyles = {
     fontSize:'0.8rem',

@@ -18,47 +18,56 @@ const loadSong = (songslist, songindex) => {
 }
 
 const playerReducer = (state = initialAppState,action) => {
-  
-  let stateIndex = state.songIndex;
-  let stateArr = state.playingPlaylist;
 
   switch (action.type) {
      case 'PLAY_SONG':
-      loadSong(action.payload.playlist, action.payload.songIndex);
-      audioTrack.play();
+        loadSong(action.payload.playlist, action.payload.songIndex);
+        audioTrack.play();
       return{
         ...state,
         isPlaying:true
       }
 
-    case 'PAUSE_SONG':
+    case 'PAUSE_MUSIC':
       audioTrack.pause();
       return{
         ...state,
         isPlaying:false
       }
     
-    case 'LOAD_AND_PLAY_THIS_PLAYLIST':
+    case 'LOAD_AND_PLAY_A_PLAYLIST':
+      return {
+        ...state,
+        playlistIDfromUser:action.payload,
+        isPlaying:true,
+        isAplaylist:true,
+        isAnAlbum:false,
+      }
+
+    case 'LOAD_AND_PLAY_AN_ALBUM':
+      return {
+        ...state,
+        playlistIDfromUser:action.payload,
+        isPlaying:true,
+        isAplaylist:false,
+        isAnAlbum:true,
+      }
+      
+    case 'PLAY_NEXT_SONG':
       audioTrack.pause();
-      loadSong(action.payload, 0);
+      loadSong(action.payload.playlist, action.payload.songindex);
       audioTrack.play();
       return{
         ...state,
-        playlistIDfromUser:action.payload,
-        isAnAlbum:false,
-        isAplaylist:true,
         isPlaying:true
       }
 
-    case 'LOAD_AND_PLAY_THIS_ALBUM':
+    case 'PLAY_PREVIOUS_SONG':
       audioTrack.pause();
-      loadSong(action.payload, 0);
+      loadSong(action.payload.playlist, action.payload.songindex);
       audioTrack.play();
       return{
         ...state,
-        playlistIDfromUser:action.payload,
-        isAnAlbum:true,
-        isAplaylist:false,
         isPlaying:true
       }
     
