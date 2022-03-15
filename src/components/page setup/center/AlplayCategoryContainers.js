@@ -1,10 +1,9 @@
 /**@jsxImportSource @emotion/react */
 import React from "react";
-import {albums,artists, playlists,categories, newAlbums, charts, genres} from "./musicStore";
+import {albums,artists, playlists, newAlbums, charts} from "./musicStore";
 import AlbumWrapper from "./AlbumWrapper";
 import PlaylistWrapper from "./PlaylistWrapper";
 import ArtistWrapper from "./ArtistsWrapper";
-import GenreWrapper from "./GenreWrapper";
 import CategoryHeadLabel from "./CategoryHeadLable";
 import MiniCategoryBlock from "./MiniCategoryBlock";
 import CenterHeader from "./CenterHeader";
@@ -53,20 +52,9 @@ const AlplayCategoryContainers = () => {
         <AlbumWrapper  albumsArr={albums} />
       </div>
 
-      <CategoryHeadLabel linkText="See all genres" categoryName="Genres" />
-      <div css={gridStyles}>
-        <GenreWrapper genresArr={genres}/>
-      </div>
-
       <div css={gridStyles}>
         <PlaylistWrapper playlistsArr={playlists} />
         <AlbumWrapper  albumsArr={albums} />
-      </div>
-
-
-      <CategoryHeadLabel linkText="See all" categoryName="Exclusive Collections" />
-      <div css={gridStyles}>
-        <GenreWrapper genresArr={categories}/>
       </div>
 
       <div css={gridStyles}>

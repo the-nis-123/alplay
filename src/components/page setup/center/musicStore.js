@@ -28,26 +28,11 @@ const charts = [
 
 ]
 
-const newAlbums = [298045772,297450532,286465882,295967762,
+const newAlbums = [291358602,291098832,295857932,286842682,
+  289107242,266772012,298045772,297450532,286465882,295967762,
   295826752,298198042,300098017,
-  296186792,295967102,291358602,291098832,295857932,286842682,
-  289107242,266772012,
-]
-
-const genres = [
-  'Pop', 'Rock', 'Hiphop/Rap', 'Dance & EDM',
-  'Country','Africa Muisc','K-Pop','Soul','Arabic Music',
-  'Jazz','Metal','Salsa','French Music','Reggea',
-  'Latin','Blues','Classical', 'Forro', 'Asian Music','Japanese Music',
-  'Electronic','R&B','Grime','SoundTracks', 'Alternative'
+  296186792,295967102,
 ]
 
 
-const categories = [
-  'Feel Good', 'Workout', 'Charts', 'New Release', 'Mixes',
-  'Chill','Acoustic','Party','Black Culture','At Home',
-  'Romance','METAL','Bon Appetit','Originals',"Women's Voices",
-  'Queer Culture','Melancholia','Between the sheets', 'ASMR', 'On Stage'
-]
-
-export {charts, artists,categories, playlists, albums, newAlbums, genres};
+export {charts, artists, playlists, albums, newAlbums};

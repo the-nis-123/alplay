@@ -1,6 +1,8 @@
 /**@jsxImportSource @emotion/react */
 import { useState, useEffect } from "react";
 import axios from "axios";
+import facepaint from "facepaint";
+import { css } from "@emotion/css";
 import {IoMdPause, IoMdPlay} from "react-icons/io";
 import {useDispatch} from "react-redux";
 import {playAplaylist} from "../../../redux/actions/playlistActions";
@@ -9,6 +11,13 @@ import {pauseButtonPressed} from "../../../redux/actions/playerActions";
 
 const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
   const [isPlaying, setIsPlaying] = useState(false);
+
+  
+  const bp = facepaint([
+    '@media(min-width: 700px)',
+    '@media(min-width: 999px)',
+    '@media(min-width: 1000px)'
+  ]);
   
   const wrapperTwo = {
     width: '100%',
@@ -30,6 +39,7 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
     display:'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    position:"relative"
   }
 
   const photo = {
@@ -37,16 +47,18 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
     height:'80px'
   }
 
-   const playpauseStyles = {
+   const playpauseStyles = css(bp({
     width: "45px",
     height:"45px",
     borderRadius:'50%',
     backgroundColor:'rgba(0, 0, 0, 0.9)',
+    position:"absolute",
+    right:"10px",
     display:"flex",
-    visibility:'hidden',
+    visibility:['visible','hidden','hidden'],
     justifyContent: 'center',
     alignItems: 'center',
-  };
+  }));
 
    const playPauseIconStyles = {
     color:"lawngreen",
@@ -102,10 +114,10 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
       {playlist.picture?<img src={playlist.picture} alt="" css={photo} />:""}
       <div css={wrapperThree}>
         <h4>{playlist.title}</h4>
-        <div id="playpause" css={playpauseStyles}>
+       {playlist.picture? <div id="playpause" className={playpauseStyles}>
           {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
           <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}
-        </div>
+        </div>:""}
       </div>
     </div>
   );

@@ -140,24 +140,25 @@ const SearchResults = () => {
     alignItems:"center",
   }
 
-   const album = {
+   const album = css(bp({
+    display:["none", "inline-block","inline-block"], 
     textAlign:'left',
     width:'20%',
     whiteSpace:'nowrap',
     overflow:'hidden',
     textOverflow:'ellipsis',
-  }
+  }));
 
-   const duration = {
+   const duration = css(bp({
     textAlign:'center',
     width:'30%',
     whiteSpace:'nowrap',
     overflow:'hidden',
     textOverflow:'ellipsis',
-    display:'flex',
+    display:["none", "flex","flex"],
     alignItems:'center',
     justifyContent:'center'
-  }
+  }))
 
    const closebutton = {
    color:"red",
@@ -203,7 +204,7 @@ const SearchResults = () => {
                 <span>{song.artist['name']}</span>
               </p>
             </div>
-            <span css={album}>{song.album['title']}</span>
+            <span className={album}>{song.album['title']}</span>
             <p css={duration}>
               <span>
                 {Math.floor(song.duration / 60)+ ':' + song.duration % 60}

@@ -21,14 +21,6 @@ export const playButtonPressed = (playlist, songIndex) =>{
   }
 }
 
-export const shuffleButtonPressed = () =>{
-  
-}
-
-export const shuffleButtonOffPressed = () =>{
-  
-}
-
 
 export const nextSongButtonPressed  = (playlist,songindex) =>{
   return{
@@ -51,16 +43,17 @@ export const previousSongButtonPressed = (playlist,songindex) =>{
   
 }
 
-export const songRepeatButtonPressed = () =>{
-  
+export const unmuteSong = () =>{
+  return {
+    type:"UNMUTE_SONG"
+  }
 }
 
 
-export const repeatAllSongsButtonPressed = () =>{
-  
+export const muteSong = () =>{
+   return {
+    type:"MUTE_SONG"
+  }
 }
 
-export const songRepeatOff = () =>{
-
-}
   

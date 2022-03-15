@@ -1,5 +1,4 @@
 /**@jsxImportSource @emotion/react */
-import Wrapper from "../../global components/Wrapper";
 
 const CategoryReactions = (props) => {
 
@@ -13,7 +12,7 @@ const CategoryReactions = (props) => {
    color:'honeydew',
    textAlign:"left",
    padding:"3px 0",
-
+   width:"100%"
   }
   
   const wrapperStyles = {
@@ -24,9 +23,9 @@ const CategoryReactions = (props) => {
     flexDirection:"column",
     alignItems:'center',
     position:'absolute',
-    bottom:'10px',
+    bottom:'0',
     left:'0',
-    padding:"0 10px"
+    padding:"10px"
    }
 
   
@@ -34,13 +33,10 @@ const CategoryReactions = (props) => {
 
   return (
     <div css={wrapperStyles} >
-      <Wrapper display="flex" flexDirection="column" position="relative"
-      >
-        <h3 css={playlistNameStyles}>{props.categoryName}</h3>
-        <p css={playlistDescriptionStyles}>
-         {props.description}
-        </p>
-      </Wrapper>
+      <h3 css={playlistNameStyles}>{props.categoryName}</h3>
+      <p css={playlistDescriptionStyles}>
+        {props.description}
+      </p>
     </div>
   )
 }

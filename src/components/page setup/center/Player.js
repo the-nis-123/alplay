@@ -1,9 +1,10 @@
 /**@jsxImportSource @emotion/react */
 import Wrapper from "../../global components/Wrapper";
-import {IoMdPause, IoMdPlay,IoMdSkipBackward, IoMdSkipForward, IoMdShuffle} from "react-icons/io";
+import {IoMdPause, IoMdPlay,IoMdSkipBackward, IoMdSkipForward} from "react-icons/io";
 import { useDispatch, useSelector} from "react-redux";
 import * as playerActions from "../../../redux/actions/playerActions";
-import {RiRepeatOneFill, RiRepeat2Line} from "react-icons/ri";
+import {MdOutlineFavorite} from "react-icons/md";
+import {BsFillVolumeMuteFill, BsFillVolumeUpFill} from "react-icons/bs";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { css } from "@emotion/css";
@@ -12,7 +13,7 @@ import facepaint from "facepaint";
 const Player = () => {
 
    const bp = facepaint([
-    '@media(min-width: 200px)',
+    '@media(min-width: 600px)',
     '@media(min-width: 999px)',
     '@media(min-width: 1000px)'
   ]);
@@ -25,8 +26,7 @@ const [artistName, setArtistName] = useState('');
 const [songDuration, setSongDuration] = useState('');
 const [songIndex, setSongIndex] = useState(0);      
 
-let {isAnAlbum, isAPlaylist, playlistIDfromUser} = useSelector(state => state.playerReducer); 
-
+let {isAnAlbum, isAPlaylist, playlistIDfromUser, volumeOn} = useSelector(state => state.playerReducer); 
 useEffect( () => {
   if(!isAnAlbum && isAPlaylist){
      const options = {
@@ -87,19 +87,19 @@ useEffect( () => {
     dispatch(playerActions.playButtonPressed(playlist, songIndex));
   }
 
+  const mute = (e) => {
+    e.stopPropagation();
+    dispatch(playerActions.muteSong());
+  }
+
+  const unmute = (e) => {
+    e.stopPropagation();
+    dispatch(playerActions.unmuteSong());
+  }
+
   const pauseSong = (e)=>{
     e.stopPropagation();
     dispatch(playerActions.pauseButtonPressed());
-  }
-
-  const shuffleSongs = (e) => {
-    e.stopPropagation();
-    dispatch(playerActions.shuffleButtonPressed());
-  }
-
-  const shuffleSongsOff = (e) => {
-    e.stopPropagation();
-    dispatch(playerActions.shuffleButtonOffPressed());
   }
 
   const nextSong = (e)=>{
@@ -174,24 +174,8 @@ useEffect( () => {
      dispatch(playerActions.previousSongButtonPressed(playlist, songIndex));
   }
 
-  const repeatCurrentSong = (e)=> {
-    e.stopPropagation();
-    dispatch(playerActions.songRepeatButtonPressed());
-  }
-
-  const repeatCurrentPlaylist = (e) => {
-    e.stopPropagation();
-    dispatch(playerActions.repeatAllSongsButtonPressed())
-  }
-
-  const repeatIsOff = (e)=>{
-    e.stopPropagation();
-    dispatch(playerActions.songRepeatOff());
-  }
   
-  const {isPlaying, repeatOff, repeatOneSong, repeatPlaylist, 
-    shuffleButton 
-    } = useSelector( state => state.playerReducer );
+  const {isPlaying} = useSelector( state => state.playerReducer );
 
   //Player Stylings
   const playerIconStyles = {
@@ -200,16 +184,6 @@ useEffect( () => {
     margin:'0 10px',
     color:'#D1B894',
     cursor:'pointer'
-  }
-
-  const playerActiveIconStyles = {
-    fontSize:'0.8rem',
-    margin:'0 10px',
-    color:'teal',
-    cursor:'pointer',
-    "&:hover" : {
-      cursor: 'pointer'
-    }
   }
 
   const songTitleStyles = {
@@ -229,6 +203,7 @@ useEffect( () => {
     margin:'0 10px',
   }
 
+
   const playButtonWrapper = {
     width:"40px",
     height:"40px",
@@ -239,35 +214,77 @@ useEffect( () => {
     alignItems:"center"
   }
 
+  const mobilePlayWrapper = css(bp({
+    width:"40px",
+    height:"40px",
+    backgroundColor:"rgba(3, 61, 0,0.8)",
+    borderRadius:"50%",
+    display:["flex","none","none"],
+    justifyContent:"center",
+    alignItems:"center"
+  }))
+
+   const mplayerIconStyles = css(bp({
+    display:['flex',"none","none"],
+    width:'18px',
+    height:'18px',
+    margin:'0 10px',
+    color:'#D1B894',
+    cursor:'pointer'
+  }));
+
   const playingSong = css(bp({
+    width:["100%","200px","200px"],
+    display:"flex",
+    height:"100%",
+    fontSize:"0.8rem",
+    justifyContent:"space-between",
+    alignItems:"center",
+  }));
+  
+
+  const rangeWrapper = css(bp({
+    width:["100%","calc(100% - 200px)","calc(100% - 400px)"],
+    height:"100%",
+    padding:"10px 20px",
     display:["none","flex","flex"],
+    justifyContent:"space-evenly",
+    alignItems:"center",
+    flexDirection:"column",
+  }))
+
+   const volumeStyles = css(bp({
+    width:"200px",
+    display:["none","none","flex"],
+    height:"100%",
     fontSize:"0.8rem",
     justifyContent:"flex-start",
     alignItems:"center",
   }));
 
-  const rangeWrapper = css(bp({
-    width:["100%","100%","70%"],
-    height:"100%",
-    padding:"10px 20px",
-    display:"flex",
-    justifyContent:"space-between",
-    alignItems:"center",
-    flexDirection:"column"
-  }))
-
 
   return (
     <Wrapper width="100%" height ="80px"  padding="0 10px"
-    display="flex" justifyContent="center" alignItems="center"  
+    display="flex" justifyContent="space-evenly" alignItems="center"  
     > 
       
       <div className={playingSong}>
-        {songCover? <img src={songCover} alt="" css={songCoverPicStyles} />:''}
-        <Wrapper width="100%" display="flex" flexDirection="column">
-          <h3 css={songTitleStyles}>{songTitle}</h3> 
-          <p css={songTitleStyles}>{artistName}</p> 
+        <Wrapper width="60%">
+          {songCover? <img src={songCover} alt="" css={songCoverPicStyles} />:''}
+          <Wrapper width="calc(100% - 40px)" display="flex" flexDirection="column">
+            <h3 css={songTitleStyles}>{songTitle}</h3> 
+            <p css={songTitleStyles}>{artistName}</p> 
+          </Wrapper>
         </Wrapper>
+
+        {songCover?<Wrapper width="40%" display="flex" justifyContent="center" alignItems="center">  
+          <MdOutlineFavorite css={playerIconStyles}  />
+          
+          <div className={mobilePlayWrapper} >
+            {isPlaying && <IoMdPause className={mplayerIconStyles} onClick={pauseSong}/> }
+            {!isPlaying && <IoMdPlay className={mplayerIconStyles} onClick={playSong}/> }  
+          </div>
+        </Wrapper>:""}
       </div>
           
        
@@ -280,34 +297,25 @@ useEffect( () => {
           <p id="songDuration">{songDuration}</p>
         </Wrapper>
       
-        <Wrapper width="100%" display="flex" justifyContent="space-between" alignItems="center">
-          <RiRepeat2Line css={playerIconStyles}  onClick={repeatCurrentSong}/>
-          
-          <Wrapper width="100%" display="flex" justifyContent="center" alignItems="center">  
-            <Wrapper display="flex" justifyContent="center" alignItems="center">
-              {shuffleButton && <IoMdShuffle css={playerActiveIconStyles} onClick={shuffleSongsOff}/>}
-              {!shuffleButton && <IoMdShuffle css={playerIconStyles} onClick={shuffleSongs}/>}
-            </Wrapper>
-            
-            <IoMdSkipBackward css={playerIconStyles} onClick={previousSong} />
-            <div css={playButtonWrapper} >
-              {isPlaying && <IoMdPause css={playerIconStyles} onClick={pauseSong}/> }
-              {!isPlaying && <IoMdPlay css={playerIconStyles} onClick={playSong}/> }  
-            </div>
-            <IoMdSkipForward css={playerIconStyles} onClick={nextSong} />
-
-            <Wrapper display="flex" justifyContent="center" alignItems="center">
-              {repeatOneSong && <RiRepeatOneFill css={playerActiveIconStyles}  onClick={repeatCurrentPlaylist}/>}
-              {repeatPlaylist && <RiRepeat2Line css={playerActiveIconStyles} onClick={repeatIsOff}/>} 
-              {repeatOff && <RiRepeat2Line css={playerIconStyles}  onClick={repeatCurrentSong}/>}
-            </Wrapper>
-          </Wrapper>
-{/* 
-          <Wrapper display="flex" justifyContent="center" alignItems="center"> 
-            <input type="range" min="0" max="100" step="1" id="volumeSlider" css={volumeStyles}/>
-          </Wrapper> */}
+         
+        <Wrapper display="flex" justifyContent="center" alignItems="center">  
+          <IoMdSkipBackward css={playerIconStyles} onClick={previousSong} />
+          <div css={playButtonWrapper} >
+            {isPlaying && <IoMdPause css={playerIconStyles} onClick={pauseSong}/> }
+            {!isPlaying && <IoMdPlay css={playerIconStyles} onClick={playSong}/> }  
+          </div>
+          <IoMdSkipForward css={playerIconStyles} onClick={nextSong} />
         </Wrapper>
       </div>  
+
+      <div className={volumeStyles}>
+      {volumeOn?
+          <BsFillVolumeUpFill  css={playerIconStyles}  onClick={unmute}/>  
+          :<BsFillVolumeMuteFill css={playerIconStyles} onClick={mute} />
+        }
+
+        <input type="range" min="0" max="100" step="1" id="volumeSlider" className={playingSong}/>
+      </div>
     </Wrapper>
   )
 }

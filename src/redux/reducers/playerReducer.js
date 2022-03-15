@@ -71,6 +71,20 @@ const playerReducer = (state = initialAppState,action) => {
         isPlaying:true
       }
     
+    case 'MUTE_SONG':
+    audioTrack.mute();
+    return{
+      ...state,
+      volumeOn:false
+    }
+
+    case 'UNMUTE_SONG':
+    audioTrack.unmute();
+    return{
+      ...state,
+      volumeOn:true
+    }
+    
     default:
       return state;
   }

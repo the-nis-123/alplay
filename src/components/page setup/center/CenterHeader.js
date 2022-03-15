@@ -21,8 +21,9 @@ const CenterHeader = () => {
 
   const wrapperStyles = css(bp({
     width: '100%',
-    height:'60px',
+    height:'45px',
     display:"flex",
+    marginTop:"10px",
     justifyContent:'center',
     alignItems:'center',
   }));
@@ -32,9 +33,9 @@ const CenterHeader = () => {
   return (
     <div className={wrapperStyles}
     >
-      <Wrapper margin="10px" width="100%"  height="30px" backgroundColor="rgba(3, 61, 0,0.1)"
+      <Wrapper margin="0 10px" width="100%"  height="45px" backgroundColor="rgba(3, 61, 0,0.1)"
        display="flex" alignItems="center" justifyContent="center">
-        <Inputform id="main-search" value={searchValue} onChange={searching} width="100% " height="30px" padding="0 10px"
+        <Inputform id="main-search" value={searchValue} onChange={searching} width="100% " height="45px" padding="0 10px"
         backgroundColor="rgba(3, 61, 0,0.2)" placeholder="search alplay" color="lightgreen"/>
       </Wrapper>
     </div>

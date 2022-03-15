@@ -16,7 +16,8 @@ export const initialAppState = {
   isAPlaylist:true,
   playlistIDfromUser:1282483245,
   showAplaylist:false,
-  showAnAlbum:false
+  showAnAlbum:false,
+  volumeOn:true
 }
 
 

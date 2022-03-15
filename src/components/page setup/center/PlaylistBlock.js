@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import CategoryReactions from "./CategoryReactions";
 import axios from "axios";
+import facepaint from "facepaint";
+import { css } from "@emotion/css";
 import {useDispatch} from "react-redux";
 import {IoMdPause, IoMdPlay} from "react-icons/io";
 import {pauseButtonPressed} from "../../../redux/actions/playerActions";
@@ -9,36 +11,65 @@ import {playAplaylist, playlistClicked} from "../../../redux/actions/playlistAct
 
 
 const PlaylistBlock = ({playlistId}) => {
+
+  
+  const bp = facepaint([
+    '@media(min-width: 700px)',
+    '@media(min-width: 999px)',
+    '@media(min-width: 1000px)'
+  ]);
    
   const [playlist, setPlaylist] = useState({});
   const [songsList, setSongsList] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   
-
-  
-  const categoryStyles = {
+ 
+  const categoryStyles = css(bp({
     width:'240px',
-    height:'320px',
+    height:'300px',
+    position:'relative',
     margin: '5px',
-    backgroundColor:'rgba(10, 61, 0, 0.2)',
+    backgroundColor:['rgba(10, 61, 0, 0.4)','rgba(10, 61, 0, 0.2)','rgba(10, 61, 0, 0.2)'],
     padding:'10px',
-    borderRadius:"5px",
-    position:"relative",
+    borderRadius:'5px',
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"space-between",
+    alignItems:"center",
     '&:hover':{
       cursor:"pointer",
-      backgroundColor: 'rgba(10, 61, 0, 0.3)',
+      backgroundColor:'rgba(10, 61, 0, 0.3)',
       '#playpause':{
        display:'flex'
       }
     }
-  }
+  }));
 
-   const playpauseStyles = {
+   const categoryPlayingStyles = css(bp({
+    width:'240px',
+    height:'300px',
+    position:'relative',
+    margin: '5px',
+    backgroundColor:['rgba(10, 61, 0, 0.4)','rgba(10, 61, 0, 0.2)','rgba(10, 61, 0, 0.2)'],
+    padding:'10px',
+    borderRadius:'5px',
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"space-between",
+    alignItems:"center",
+    cursor:"pointer",
+    '&:#backgroundColor':'rgba(10, 61, 0, 0.3)',
+    '#playpause':{
+      display:'flex'
+    }
+  }))
+
+   const playpauseStyles = css(bp({
     width: "45px",
     height:"45px",
     borderRadius:'50%',
     backgroundColor:'rgba(0, 0, 0, 0.9)',
-    display: "none",
+    display: ["flex","none","none"],
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
@@ -49,7 +80,7 @@ const PlaylistBlock = ({playlistId}) => {
     '&:hover':{
       cursor:'pointer'
     }
-   };
+   }));
 
   const playPauseIconStyles = {
     color:"lawngreen",
@@ -105,13 +136,13 @@ const PlaylistBlock = ({playlistId}) => {
   );
 
   return (
-    <div onDoubleClick={openThisCategory} css={categoryStyles}>
+    <div onClick={openThisCategory} className={ isPlaying? categoryPlayingStyles : categoryStyles}>
       {playlist.picture_medium? <img src={playlist.picture_medium} alt="" css={imageStyles} /> : ''}
       {playlist.description? <CategoryReactions description={playlist.description} categoryName={playlist.title}/> : ''}
-      <div id="playpause" css={playpauseStyles}>
+      {playlist.picture_medium? <div id="playpause" className={playpauseStyles}>
           {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
           <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}
-      </div>
+      </div>:""}
     </div>
   )
 }
