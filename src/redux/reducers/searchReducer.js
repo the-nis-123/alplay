@@ -6,9 +6,9 @@ const searchReducer = (state=initialAppState, action) => {
       return{
         ...state,
         searchValue: document.getElementById("main-search").value,
-        showPlaylist:false,
+        showAplaylist:false,
+        showAnAlbum:false,
       }
-  
     default:
       return state;
   }

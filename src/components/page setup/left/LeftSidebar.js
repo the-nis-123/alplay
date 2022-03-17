@@ -30,7 +30,7 @@ const LeftSidebar = () => {
   const IconsStyles = {
     margin:'0 5px',
     color:'limegreen',
-     fontSize:'1.3rem'
+    fontSize:'1.3rem'
   }
 
   return (

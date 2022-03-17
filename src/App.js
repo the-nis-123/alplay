@@ -4,8 +4,10 @@ import Home from './components/page setup/Home';
 
 
 export const initialAppState = {
+
   
-  playingPlaylist:[],
+  playingPlaylist:{},
+  playingSongIndex:'',
   playlistToShow:[],
   tracklistToShow:{},
   songIndex:0,
@@ -17,8 +19,14 @@ export const initialAppState = {
   playlistIDfromUser:1282483245,
   showAplaylist:false,
   showAnAlbum:false,
-  volumeOn:true
+  volumeOn:true,
+  showActiveSong:false,
+  songTitle:"",
+  songDuration:"",
+  artistName:"", 
 }
+
+
 
 
 function App() {

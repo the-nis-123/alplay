@@ -57,7 +57,7 @@ const RightHeader = () => {
    const IconStyles = {
     height:'20px',
     width:'20px',
-    color:"#D1B894",
+    color:"#D9910D",
     margin:'0 5px',
     cursor:'pointer'
   }

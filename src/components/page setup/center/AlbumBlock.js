@@ -27,7 +27,7 @@ const AlbumBlock = ({albumId}) => {
     width:'240px',
     height:'300px',
     position:'relative',
-    margin: '5px',
+    margin: '10px 0',
     backgroundColor:['rgba(10, 61, 0, 0.4)','rgba(10, 61, 0, 0.2)','rgba(10, 61, 0, 0.2)'],
     padding:'10px',
     borderRadius:'5px',
@@ -49,7 +49,7 @@ const AlbumBlock = ({albumId}) => {
     width:'240px',
     height:'300px',
     position:'relative',
-    margin: '5px',
+    margin: '10px 0',
     backgroundColor:['rgba(10, 61, 0, 0.4)','rgba(10, 61, 0, 0.2)','rgba(10, 61, 0, 0.2)'],
     padding:'10px',
     borderRadius:'5px',
@@ -84,7 +84,7 @@ const AlbumBlock = ({albumId}) => {
    }));
 
     const playPauseIconStyles = {
-      color:"lawngreen",
+      color:"#D9910D",
       width: '50%',
       height:'auto'
     }
@@ -108,7 +108,8 @@ const AlbumBlock = ({albumId}) => {
   let playCategory = (e) => {
     e.stopPropagation();
     setIsPlaying(true);
-    dispatch(playAnAlbum(albumId));
+    console.log(album);
+    dispatch(playAnAlbum(album,0));
   }
   
   let openThisCategory = (e) => {

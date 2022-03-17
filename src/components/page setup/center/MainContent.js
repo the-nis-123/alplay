@@ -8,6 +8,7 @@ import { css } from "@emotion/css";
 import facepaint from "facepaint";
 import SearchResults from "../../modals/SearchResults";
 import OpenedAlbum from "../../modals/OpenedAlbum";
+import MaxPlayer from "./MaxPlayer";
 
 const MainContent = () => {
 
@@ -23,6 +24,7 @@ const MainContent = () => {
     height:'100%',
     overflowY:"scroll",
     overflowX:"hidden",
+    position:"relative",
     padding:'5px',
     display:'flex',
     flexDirection:'column',
@@ -33,8 +35,9 @@ const MainContent = () => {
 
   let menu = useSelector(state=>state.searchReducer.homeMenu);
   let search = useSelector(state=>state.searchReducer.searchValue);
-  let showAPlaylist = useSelector(state=>state.playlistReducer.showAPlaylist);
+  let showAPlaylist = useSelector(state=>state.playlistReducer.showAplaylist);
   let showAnAlbum = useSelector(state=>state.playlistReducer.showAnAlbum);
+  let showMaxPlayer =  useSelector(state=>state.playerReducer.showActiveSong);
 
   return (
     <div className={wrapperStyles}
@@ -44,8 +47,10 @@ const MainContent = () => {
        { search && <SearchResults/>} 
        { showAnAlbum && <OpenedAlbum/>}
        { showAPlaylist && <OpenedPlaylist/>}
+      
       </Wrapper>
-      <Player/>
+     {showMaxPlayer && <MaxPlayer/>}
+     {!showMaxPlayer && <Player/>}
     </div>
   )
 }

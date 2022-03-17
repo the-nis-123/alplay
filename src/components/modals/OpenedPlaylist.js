@@ -1,7 +1,7 @@
 /**@jsxImportSource  @emotion/react */
 import { useSelector, useDispatch } from "react-redux";
 import { songInPlaylistDoubleClicked
- } from "../../redux/actions/playerActions";
+ } from "../../redux/actions/playlistActions";
 import { css } from "@emotion/css";
 import facepaint from "facepaint";
 import {closeButton} from "../../redux/actions/otherActions";
@@ -19,12 +19,10 @@ const OpenedPlaylist = () => {
  
   let songslist = useSelector(state => state.playlistReducer.playlistToShow);
 
-  console.log(songslist);
-
   const wrapperStyles={
     width:'100%',
-    height:'calc(100% - 20px)',
-    background:`linear-gradient(rgb(0,0,0) 20%, rgba(0,0,0,0.7) 300%)`,
+    height:'100%',
+    background:`linear-gradient(rgba(0,0,0,0.99), rgba(0,0,0,0.99))`,
     display:'flex',
     flexDirection:'column',
     justifyContent:'flex-start',
@@ -55,36 +53,24 @@ const OpenedPlaylist = () => {
   }
 
   const listStyles = css(bp({
-    margin: '5px 0',
-    padding:"5px 0",
+    margin: '10px 0',
+    height:"60px",
+    width:"100%",
+    padding:"5px 10px",
     fontSize:'0.9rem',
     cursor: 'pointer',
     position: 'relative',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    '&:hover':{
-      backgroundColor:'yellow',
-      color:'darkgreen',
-
-      '#songActions':{
-        display: 'flex',
-      }
-    },
-
-    '#songActions':{
-      display: 'none',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex:'100000'
-    }
+    backgroundColor:'rgba(255,255,255, 0.06)',
   }));
 
   const songCoverPicStyles={
-    width:'40px',
-    height:'40px',
+    width:'60px',
+    height:'60px',
     borderRadius:'3px',
-    margin:'0 10px'
+    margin:'0 5px'
   }
 
   const numbered = {
@@ -110,23 +96,21 @@ const OpenedPlaylist = () => {
     alignItems:"center",
   }
 
-   const album = {
+   const album = css(bp({
+    display:["none", "none","inline-block"], 
     textAlign:'left',
     width:'20%',
     whiteSpace:'nowrap',
     overflow:'hidden',
     textOverflow:'ellipsis',
-  }
+  }));
 
    const duration = {
-    textAlign:'center',
+    textAlign:'right',
     width:'30%',
     whiteSpace:'nowrap',
     overflow:'hidden',
     textOverflow:'ellipsis',
-    display:'flex',
-    alignItems:'center',
-    justifyContent:'center'
   }
 
   const closebutton = {
@@ -139,7 +123,7 @@ const OpenedPlaylist = () => {
   //song double clicked, play import PropTypes from 'prop-types'
   let songDoubleClicked = (e) => {
     e.stopPropagation();
-    dispatch(songInPlaylistDoubleClicked(e.target.key));
+    dispatch(songInPlaylistDoubleClicked());
   }
 
   
@@ -154,17 +138,17 @@ const OpenedPlaylist = () => {
     <div css={wrapperStyles}>
       <h3 css={headingStyles}>
         <span css={title}># TITLE</span>
-        <span css={album}>ALBUM</span>
+        <span className={album}>ALBUM</span>
         <span css={duration}>DURATION</span>
         <span onClick={close} css={closebutton}>X</span>
       </h3>
       <ul css={listContainerStyles}>
 
         {
-         songslist.length > 0 ?
+         songslist && songslist.length > 0 ?
             songslist.map(song => 
             <li key={song.id} className={listStyles} 
-              onDoubleClick={songDoubleClicked}
+              onClick={songDoubleClicked}
             >  
               <div css={title}>
                 <span css={numbered}>
@@ -177,9 +161,9 @@ const OpenedPlaylist = () => {
                   <span>{song.artist['name']}</span>
                 </p>
               </div>
-              <span css={album}>{song.album['title']}</span>
+              <span className={album}>{song.album['title']}</span>
               <p css={duration}>
-                  {Math.floor(song.duration / 60)+ ':' + song.duration % 60}
+                {Math.floor(song.duration / 60)+ ':' + song.duration % 60}
               </p>
             </li>
           ):"loading"

@@ -27,7 +27,7 @@ const LeftHeader = () => {
 
 
   const appNameStyles = css(bp({
-   color:'#30F284',
+   color:'#6CA632',
   }));
 
   return (

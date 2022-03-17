@@ -9,7 +9,7 @@ const  CategoryHeadLabel = ({categoryName, linkText}) => {
     alignItems:'center',
     justifyContent:'space-between',
     padding:'0 10px',
-    margin:'20px 0 10px 0'
+    margin:'10px 0',
   }
 
   const link = {
@@ -23,7 +23,7 @@ const  CategoryHeadLabel = ({categoryName, linkText}) => {
 return (
     <div css={wrapper}>
       <h3>{categoryName}</h3>
-      <h4 css={link}>{linkText}</h4>
+      <h5 css={link}>{linkText}</h5>
     </div>
   );
 }

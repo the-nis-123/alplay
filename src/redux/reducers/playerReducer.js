@@ -5,27 +5,25 @@ import {initialAppState} from "../../App";
 
 let audioTrack;
 audioTrack = document.createElement('audio');
-//load track
-const loadSong = (songslist, songindex) => {
-  if(songslist.length > 0){
-    audioTrack.src=`${songslist[songindex].preview}`;
-    audioTrack.load();
-    return [
-      songslist[songindex].title, 
-      songslist[songindex].artist
-    ];
-  } 
-}
+
 
 const playerReducer = (state = initialAppState,action) => {
-
+  let trackIndex = state.songIndex;
+  let songs = state.playingPlaylist.tracks.data;
+  
+  
   switch (action.type) {
      case 'PLAY_SONG':
-        loadSong(action.payload.playlist, action.payload.songIndex);
-        audioTrack.play();
+      audioTrack.src=`${action.payload.playlist.tracks.data[0].preview}`;
+      audioTrack.load();
+      audioTrack.play();
       return{
         ...state,
-        isPlaying:true
+        playingPlaylist:action.payload.playlist,
+        isPlaying:true,
+        songTitle:action.payload.pla.tracks.data[0].title,
+        songDuration:action.payload.pla.tracks.data[0].duration,
+        artistName:action.payload.pla.tracks.data[0].artist['name'], 
       }
 
     case 'PAUSE_MUSIC':
@@ -35,42 +33,93 @@ const playerReducer = (state = initialAppState,action) => {
         isPlaying:false
       }
     
-    case 'LOAD_AND_PLAY_A_PLAYLIST':
+    case 'LOAD_AND_PLAY_THIS_PLAYLIST':
+      audioTrack.src=`${action.payload.playlist.tracks.data[0].preview}`;
+      audioTrack.load();
+      audioTrack.play();
+      audioTrack.play();
       return {
         ...state,
-        playlistIDfromUser:action.payload,
+        playingPlaylist:action.payload.playlist,
         isPlaying:true,
         isAplaylist:true,
         isAnAlbum:false,
+        songTitle:"",
+        songDuration:"",
+        artistName:"", 
+        cover:"",
+        songCover:""
       }
 
-    case 'LOAD_AND_PLAY_AN_ALBUM':
+    case 'LOAD_AND_PLAY_THIS_ALBUM':
+      audioTrack.src=`${action.payload.playlist.tracks.data[0].preview}`;
+      audioTrack.load();
+      audioTrack.play();
+      audioTrack.play();
       return {
         ...state,
-        playlistIDfromUser:action.payload,
+        playingPlaylist:action.payload.playlist,
         isPlaying:true,
         isAplaylist:false,
         isAnAlbum:true,
+        songTitle:"",
+        songDuration:"",
+        artistName:"", 
+        cover:"",
+        songCover:""
       }
       
     case 'PLAY_NEXT_SONG':
-      audioTrack.pause();
-      loadSong(action.payload.playlist, action.payload.songindex);
-      audioTrack.play();
+     if(trackIndex<songs.length-1){
+        trackIndex=+1; 
+        audioTrack.src=`${songs[trackIndex].preview}`
+        audioTrack.load()
+        audioTrack.play()
+      }else{
+        trackIndex=0;
+        audioTrack.src=`${songs[trackIndex].preview}`;
+        audioTrack.load();
+        audioTrack.play();
+      }
       return{
         ...state,
-        isPlaying:true
+        isPlaying:true,
+        songIndex:trackIndex
       }
 
     case 'PLAY_PREVIOUS_SONG':
-      audioTrack.pause();
-      loadSong(action.payload.playlist, action.payload.songindex);
-      audioTrack.play();
+      if(trackIndex > 0){
+        trackIndex=-1; 
+        audioTrack.src=`${songs[trackIndex].preview}`
+        audioTrack.load()
+        audioTrack.play()
+      }else{
+        trackIndex=songs.length-1;
+        audioTrack.src=`${songs[trackIndex].preview}`;
+        audioTrack.load();
+        audioTrack.play();
+      }
       return{
         ...state,
-        isPlaying:true
+        isPlaying:true,
+        songIndex:trackIndex
       }
     
+    case 'LOAD_AND_PLAY_THIS_TRACK':
+      console.log(action.payload);
+      return{
+        ...state
+      }
+    
+    case 'SHOW_ACTIVE_SONG':
+    return {
+      ...state,
+      showAplaylist:false,
+      showAnAlbum:false,
+      homeMenu:false,
+      showActiveSong:true
+    }
+
     case 'MUTE_SONG':
     audioTrack.mute();
     return{
@@ -83,6 +132,15 @@ const playerReducer = (state = initialAppState,action) => {
     return{
       ...state,
       volumeOn:true
+    }
+
+    case 'CLOSE_MAX_PLAYER':
+    return{
+      ...state,
+      showAplaylist:false,
+      showAnAlbum:false,
+      showActiveSong:false,
+      homeMenu:true,
     }
     
     default:

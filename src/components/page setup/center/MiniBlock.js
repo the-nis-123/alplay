@@ -5,7 +5,7 @@ import facepaint from "facepaint";
 import { css } from "@emotion/css";
 import {IoMdPause, IoMdPlay} from "react-icons/io";
 import {useDispatch} from "react-redux";
-import {playAplaylist} from "../../../redux/actions/playlistActions";
+import {playAplaylist, playlistClicked} from "../../../redux/actions/playlistActions";
 import {pauseButtonPressed} from "../../../redux/actions/playerActions";
 
 
@@ -61,14 +61,14 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
   }));
 
    const playPauseIconStyles = {
-    color:"lawngreen",
+    color:"#D9910D",
     width: '50%',
     height:'auto'
   }
 
 
-  const [playlist, setPlaylist] = useState(' ');
-  //const [songsList, setSongsList] = useState([]);
+  const [playlist, setPlaylist] = useState({});
+  const [songsList, setSongsList] = useState([]);
 
   useEffect(() => {
     const options = {
@@ -83,7 +83,7 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
     axios.request(options).then(function (response) {
       let returnedPlaylist = response.data;
       setPlaylist(returnedPlaylist);
-      //console.log(returnedPlaylist);
+      setSongsList(returnedPlaylist.tracks.data);
     }).catch(function (error) {
       console.error(error);
     });
@@ -103,14 +103,19 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
 
   let playCategory = (e) => {
      e.stopPropagation();
-    dispatch(playAplaylist());
+    dispatch(playAplaylist(playlist, 0));
     setIsPlaying(true);
   }
 
+  
+  let openThisCategory = (e) => {
+    e.stopPropagation();
+    dispatch(playlistClicked(songsList));
+  }
  
 
   return(
-    <div css={wrapperTwo} key={playlistId}>
+    <div css={wrapperTwo} key={playlistId} onClick={openThisCategory}>
       {playlist.picture?<img src={playlist.picture} alt="" css={photo} />:""}
       <div css={wrapperThree}>
         <h4>{playlist.title}</h4>

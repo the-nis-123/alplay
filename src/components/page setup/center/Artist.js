@@ -33,15 +33,18 @@ const Artist = ({artistid}) => {
     height:"170px",
     borderRadius:"50%",
     border:"none",
-    outline:"none"
+    outline:"none",
+    margin:"0 auto"
   }
 
   const wrapperStyles = {
     width:'240px',
     height:'320px',
     display:"flex",
+    flexDirection:"column",
     justifyContent:"center",
-    margin: '5px',
+    alignItems:"space-between",
+    margin: '10px 0',
     backgroundColor:'rgba(10, 61, 0, 0.2)',
     padding:'15px',
     borderRadius:'5px',
@@ -63,7 +66,7 @@ const Artist = ({artistid}) => {
     border:'none',
     outline:'none',
     margin:'6px 0',
-    backgroundColor:"lightgreen",
+    backgroundColor:"#588C32",
     '&:hover': {
       cursor: 'pointer'
     }
@@ -76,9 +79,6 @@ const Artist = ({artistid}) => {
     flexDirection:"column",
     justifyContent:'space-evenly',
     alignItems:'center',
-    position:'absolute',
-    bottom:'10px',
-    left:'0',
   }
 
   const innerWrapper = {

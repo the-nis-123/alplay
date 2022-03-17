@@ -3,15 +3,6 @@ export const markSongAsFavorite = ()=>{
   return {type:'MARK_SONG_AS_FAVORITE'}
 }
 
-export const saveSongForOffline = ()=>{
-  return {type:'SAVE_A_SONG_FOR_OFFLINE'}
-}
-
-export const shareThisSong = ()=>{
-  return {type:'SHARE_THIS_SONG'}
-}
-
-
 export const playlistClicked = (songsList)=>{
   return {
     type:'SHOW_SONGS_IN_CLICKED_PLAYLIST',
@@ -28,27 +19,25 @@ export const albumClicked = (songsList)=>{
 }
 
 
-export const songInPlaylistDoubleClicked = ()=>{
+export const songInPlaylistDoubleClicked = (id)=>{
   return {
-    type:'PLAY_A_DOUBLE_CLICKED_SONG_FROM_PLAYLIST',
-    payload:{
-      id:''
-    }
+    type:'LOAD_AND_PLAY_THIS_TRACK',
+    payload:id
   }
 }
 
 
-export const playAplaylist = (playlistId)=>{
+export const playAplaylist = (playlist, id)=>{
   return {
     type:'LOAD_AND_PLAY_THIS_PLAYLIST',
-    payload:playlistId
+    payload:{playlist, id}
   }
 }
 
 
-export const playAnAlbum = (albumId)=>{
+export const playAnAlbum = (playlist, id)=>{
   return {
     type:'LOAD_AND_PLAY_THIS_ALBUM',
-    payload:albumId
+    payload:{playlist, id}
   }
 }

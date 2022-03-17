@@ -15,15 +15,15 @@ const playlistReducer = (state=initialAppState, action) => {
       return {
         ...state,
         playlistToShow:action.payload,
-        showAplaylist:true,
         showAnAlbum:false,
+        showAplaylist:true,
       }
 
     case 'CLOZE_MODAL':
        return {
         ...state,
-        showAPlaylist:false,
-        searchValue:"",
+        showAplaylist:false,
+        searchValue:false,
         showAnAlbum:false,
       }
     default:

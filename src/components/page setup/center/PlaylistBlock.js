@@ -28,7 +28,7 @@ const PlaylistBlock = ({playlistId}) => {
     width:'240px',
     height:'300px',
     position:'relative',
-    margin: '5px',
+    margin: '10px 0',
     backgroundColor:['rgba(10, 61, 0, 0.4)','rgba(10, 61, 0, 0.2)','rgba(10, 61, 0, 0.2)'],
     padding:'10px',
     borderRadius:'5px',
@@ -49,7 +49,7 @@ const PlaylistBlock = ({playlistId}) => {
     width:'240px',
     height:'300px',
     position:'relative',
-    margin: '5px',
+    margin: '10px 0',
     backgroundColor:['rgba(10, 61, 0, 0.4)','rgba(10, 61, 0, 0.2)','rgba(10, 61, 0, 0.2)'],
     padding:'10px',
     borderRadius:'5px',
@@ -83,7 +83,7 @@ const PlaylistBlock = ({playlistId}) => {
    }));
 
   const playPauseIconStyles = {
-    color:"lawngreen",
+    color:"#D9910D",
     width: '50%',
     height:'auto',
   }
@@ -106,7 +106,8 @@ const PlaylistBlock = ({playlistId}) => {
 
   let playCategory = (e) => {
      e.stopPropagation();
-     dispatch(playAplaylist(playlistId));
+     console.log(playlist)
+     dispatch(playAplaylist(playlist, 0));
      setIsPlaying(true);
   }
  

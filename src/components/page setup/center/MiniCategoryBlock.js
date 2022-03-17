@@ -18,7 +18,7 @@ const  MiniCategoryBlock = ({itemsArr}) => {
     gridTemplateColumns:['1fr', '1fr 1fr', ' 1fr 1fr'],
     gridTemplateRows:'repeat(2, "80px")',
     gap:'10px',
-    padding:'10px 5px',
+    padding:"10px 0"
   }));
 
  

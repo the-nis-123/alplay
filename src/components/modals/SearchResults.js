@@ -2,12 +2,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
   songInPlaylistDoubleClicked
-} from "../../redux/actions/playerActions";
+} from "../../redux/actions/playlistActions";
 import { css } from "@emotion/css";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import facepaint from "facepaint";
-import {closeButton} from "../../redux/actions/otherActions";
 
 
 const SearchResults = () => {
@@ -31,7 +30,6 @@ const SearchResults = () => {
         const returnedData = response.data;
        if(returnedData.data){
           setSearchResults(returnedData.data);
-          console.log(returnedData.data);
        }else{
           console.log('something went wrong');
        }
@@ -52,8 +50,8 @@ const SearchResults = () => {
 
   const wrapperStyles={
     width:'100%',
-    height:'calc(100% - 60px)',
-    background:`linear-gradient(rgb(0,0,0) 20%, rgba(0,0,0,0.2) 300%)`,
+    height:'calc(100% - 50px)',
+    background:`linear-gradient(rgba(0,0,0,0.99), rgba(0,0,0,0.99))`,
     backgroundRepeat:'no-repeat',
     backgroundPosition: 'center',
     backgroundAttachment: 'fixed',
@@ -63,7 +61,7 @@ const SearchResults = () => {
     justifyContent:'flex-start',
     alignItems:'center', 
     position:'absolute',
-    top:'40px'  
+    top:'50px'  
   }
 
   const headingStyles={
@@ -85,36 +83,24 @@ const SearchResults = () => {
   }
 
   const listStyles = css(bp({
-    margin: '5px 0',
-    padding:"5px 0",
+     margin: '10px 0',
+    height:"60px",
+    width:"100%",
+    padding:"5px 10px",
     fontSize:'0.9rem',
     cursor: 'pointer',
     position: 'relative',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    '&:hover':{
-      backgroundColor:'yellow',
-      color:'darkgreen',
-
-      '#songActions':{
-        display: 'flex',
-      }
-    },
-
-    '#songActions':{
-      display: 'none',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex:'100000'
-    }
+    backgroundColor:'rgba(255,255,255, 0.06)',
   }));
 
   const songCoverPicStyles={
-    width:'40px',
-    height:'40px',
+    width:'60px',
+    height:'60px',
     borderRadius:'3px',
-    margin:'0 10px'
+    margin:'0 5px'
   }
 
   const numbered = {
@@ -141,7 +127,7 @@ const SearchResults = () => {
   }
 
    const album = css(bp({
-    display:["none", "inline-block","inline-block"], 
+    display:["none", "none","inline-block"], 
     textAlign:'left',
     width:'20%',
     whiteSpace:'nowrap',
@@ -160,10 +146,6 @@ const SearchResults = () => {
     justifyContent:'center'
   }))
 
-   const closebutton = {
-   color:"red",
-   cursor:"pointer"
-  }
 
   //dispatch some actions 
   let dispatch = useDispatch();
@@ -172,26 +154,20 @@ const SearchResults = () => {
     e.stopPropagation();
     dispatch(songInPlaylistDoubleClicked());
   }
-
-  let close = (e) => {
-    e.stopPropagation();
-    dispatch(closeButton());
-  }
   
 
   return (
     <div css={wrapperStyles}>
       <h3 css={headingStyles}>
         <span css={title}># TITLE</span>
-        <span css={album}>ALBUM</span>
+        <span className={album}>ALBUM</span>
         <span css={duration}>DURATION</span>
-        <span onClick={close} css={closebutton}>X</span>
       </h3>
       <ul css={listContainerStyles}>
         {searchResults.length > 0 ?
           searchResults.map(song => 
           <li key={song.id} className={listStyles} 
-          onDoubleClick={songDoubleClicked}
+          onClick={songDoubleClicked}
           >  
             <div css={title}>
               <span css={numbered}>
@@ -206,9 +182,7 @@ const SearchResults = () => {
             </div>
             <span className={album}>{song.album['title']}</span>
             <p css={duration}>
-              <span>
-                {Math.floor(song.duration / 60)+ ':' + song.duration % 60}
-              </span>
+              {Math.floor(song.duration / 60)+ ':' + song.duration % 60} 
             </p>
           </li>
           ):""}
