@@ -91,7 +91,7 @@ const Artist = ({artistid}) => {
 
   return (
     <div css={wrapperStyles}>
-     {artist.picture_medium? <img src={artist.picture_medium} alt="" css={profilepic} />:''}
+     {artist.picture_medium? <img src={artist.picture_medium} alt="" css={profilepic} />:'loading'}
       <div css={detailsWrapper}>
        {artist.name? <h4>{artist.name}</h4> :''}
         {artist.name ?<button css={buttonStyles}>Follow</button>:''}

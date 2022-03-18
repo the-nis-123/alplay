@@ -100,15 +100,14 @@ const PlaylistBlock = ({playlistId}) => {
 
   let pauseCategory = (e) => {
     e.stopPropagation();
-    dispatch(pauseButtonPressed());
     setIsPlaying(false);
+    dispatch(pauseButtonPressed());
   }
 
   let playCategory = (e) => {
      e.stopPropagation();
-     console.log(playlist)
-     dispatch(playAplaylist(playlist, 0));
      setIsPlaying(true);
+     dispatch(playAplaylist(playlist, 0));
   }
  
   let openThisCategory = (e) => {
@@ -143,7 +142,7 @@ const PlaylistBlock = ({playlistId}) => {
       {playlist.picture_medium? <div id="playpause" className={playpauseStyles}>
           {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
           <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}
-      </div>:""}
+      </div>:"loading"}
     </div>
   )
 }

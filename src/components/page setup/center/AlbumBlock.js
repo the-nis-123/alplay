@@ -108,7 +108,6 @@ const AlbumBlock = ({albumId}) => {
   let playCategory = (e) => {
     e.stopPropagation();
     setIsPlaying(true);
-    console.log(album);
     dispatch(playAnAlbum(album,0));
   }
   
@@ -145,7 +144,7 @@ const AlbumBlock = ({albumId}) => {
       {album.cover_medium ? <div id="playpause" className={playpauseStyles}>
         {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
         <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}
-      </div>:""}
+      </div>:"loading"}
     </div>
   )
 }

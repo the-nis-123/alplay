@@ -96,15 +96,15 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
   let dispatch = useDispatch();
 
   let pauseCategory = (e) => {
-     e.stopPropagation();
-    dispatch(pauseButtonPressed());
+    e.stopPropagation();
     setIsPlaying(false);
+    dispatch(pauseButtonPressed());
   }
 
   let playCategory = (e) => {
-     e.stopPropagation();
-    dispatch(playAplaylist(playlist, 0));
+    e.stopPropagation();
     setIsPlaying(true);
+    dispatch(playAplaylist(playlist, 0));
   }
 
   
@@ -122,7 +122,7 @@ const  MiniBlock = ({playlistId, colorOne, colorTwo}) => {
        {playlist.picture? <div id="playpause" className={playpauseStyles}>
           {isPlaying ?  <IoMdPause css={playPauseIconStyles} onClick={pauseCategory}/>:
           <IoMdPlay css={playPauseIconStyles} onClick={playCategory}/>}
-        </div>:""}
+        </div>:"loading"}
       </div>
     </div>
   );

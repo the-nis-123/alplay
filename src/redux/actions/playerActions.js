@@ -5,13 +5,9 @@ export const pauseButtonPressed = () => {
   }
 }
 
-export const playButtonPressed = (playlist, songIndex) =>{
+export const playButtonPressed = () =>{
   return{
-    type:"PLAY_SONG",
-    payload:{
-      playlist:playlist,
-      songIndex:songIndex
-    }
+    type:"PLAY_SONG"
   }
 }
 

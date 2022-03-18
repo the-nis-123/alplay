@@ -14,16 +14,15 @@ const playerReducer = (state = initialAppState,action) => {
   
   switch (action.type) {
      case 'PLAY_SONG':
-      audioTrack.src=`${action.payload.playlist.tracks.data[0].preview}`;
+      audioTrack.src=songs[trackIndex].preview;
       audioTrack.load();
       audioTrack.play();
       return{
         ...state,
-        playingPlaylist:action.payload.playlist,
         isPlaying:true,
-        songTitle:action.payload.pla.tracks.data[0].title,
-        songDuration:action.payload.pla.tracks.data[0].duration,
-        artistName:action.payload.pla.tracks.data[0].artist['name'], 
+        songTitle:songs[trackIndex].title,
+        songDuration:action.songs[trackIndex].duration,
+        artistName:action.songs[trackIndex].artist['name'], 
       }
 
     case 'PAUSE_MUSIC':
@@ -40,8 +39,8 @@ const playerReducer = (state = initialAppState,action) => {
       audioTrack.play();
       return {
         ...state,
-        playingPlaylist:action.payload.playlist,
         isPlaying:true,
+        playingPlaylist:action.payload.playlist,
         isAplaylist:true,
         isAnAlbum:false,
         songIndex:0,
@@ -69,38 +68,45 @@ const playerReducer = (state = initialAppState,action) => {
       
     case 'PLAY_NEXT_SONG':
      if(trackIndex<songs.length-1){
-        trackIndex=+1; 
-        audioTrack.src=`${songs[trackIndex].preview}`
+        audioTrack.src=`${songs[state.songIndex+1].preview}`
         audioTrack.load()
         audioTrack.play()
+          return{
+          ...state,
+          isPlaying:true,
+          songIndex:state.songIndex+1
+        }
       }else{
-        trackIndex=0;
-        audioTrack.src=`${songs[trackIndex].preview}`;
+        audioTrack.src=`${songs[0].preview}`;
         audioTrack.load();
         audioTrack.play();
+          return{
+          ...state,
+          isPlaying:true,
+          songIndex:0
+        }
       }
-      return{
-        ...state,
-        isPlaying:true,
-        songIndex:trackIndex
-      }
+      
 
     case 'PLAY_PREVIOUS_SONG':
       if(trackIndex > 0){
-        trackIndex=-1; 
-        audioTrack.src=`${songs[trackIndex].preview}`
+        audioTrack.src=`${songs[state.songIndex-1].preview}`
         audioTrack.load()
         audioTrack.play()
-      }else{
-        trackIndex=songs.length-1;
-        audioTrack.src=`${songs[trackIndex].preview}`;
-        audioTrack.load();
-        audioTrack.play();
-      }
-      return{
-        ...state,
-        isPlaying:true,
-        songIndex:trackIndex
+        return{
+          ...state,
+          isPlaying:true,
+          songIndex:state.songIndex-1
+        }
+        }else{
+          audioTrack.src=`${songs[songs.length-1].preview}`;
+          audioTrack.load();
+          audioTrack.play();
+          return{
+          ...state,
+          isPlaying:true,
+          songIndex:songs.length-1
+        }
       }
     
     case 'LOAD_AND_PLAY_THIS_TRACK':

@@ -14,23 +14,29 @@ const MAxPlayer = () => {
 
    const bp = facepaint([
     '@media(min-width: 700px)',
-    '@media(min-width: 1200px)',
-    '@media(min-width: 1200px)'
+    '@media(min-width: 1000px)',
+    '@media(min-width: 3000px)'
   ]);
 
 
- const {
-    songTitle, songIndex, songDuration, isPlaying,
-    volumeOn, artistName, playingPlaylist, isAnAlbum,isAPlaylist 
+ const { songIndex, 
+    volumeOn, playingPlaylist,isPlaying, isAnAlbum,isAPlaylist 
   } = useSelector(state=>state.playerReducer);
 
-  let cover="";
-  if(isAPlaylist){
-    cover=playingPlaylist.tracks.data[songIndex].album['cover_big'];
-  }else if(isAnAlbum){
-    cover=playingPlaylist.cover_big;
+  
+  let songCover, songTitle,songDuration, artistName="";
+  if(isAPlaylist && Object.keys(playingPlaylist).length!==0){
+    songCover=playingPlaylist.tracks.data[songIndex].album['cover_big'];
+    songTitle=playingPlaylist.tracks.data[songIndex].title;
+    songDuration=playingPlaylist.tracks.data[songIndex].duration;
+    artistName=playingPlaylist.tracks.data[songIndex].artist['name'];
+  }else if(isAnAlbum && Object.keys(playingPlaylist).length!==0){
+    songCover=playingPlaylist.cover_big;
+    songTitle=playingPlaylist.tracks.data[songIndex].title;
+    songDuration=playingPlaylist.tracks.data[songIndex].duration;
+    artistName=playingPlaylist.tracks.data[songIndex].artist['name'];
   }else{
-    return;
+    console.log("song cover not loaded");
   }
 
 
@@ -100,13 +106,13 @@ const MAxPlayer = () => {
   }
 
    const maxSongCoverPicStyles=css(bp({
-    width:['90%','60%','20%'],
+    width:['90%','60%','45% !important'],
     height:'auto',
     borderRadius:'3px',
   }))
 
   const detailsWrapper = css(bp({
-    width:['90%','60%','40%'],
+    width:['90%','60%','45%'],
     display:"flex",
     flexDirection:"column",
     justifyContent:"center",
@@ -139,14 +145,14 @@ const MAxPlayer = () => {
 
   return (
     <div  className={maxPlayerStyles}>
-      {cover? <p className={activeSongDetails}>
+      <p className={activeSongDetails}>
         <MdOutlineKeyboardArrowDown style={{cursor:"pointer"}} onClick={close} />
         <span>now playling</span>
         <HiOutlineDotsVertical />
-      </p>:""}
+      </p>
 
-      {cover? <img src={cover} alt="" className={maxSongCoverPicStyles} />:''}
-      {cover? <div className={detailsWrapper}>
+      {songCover? <img src={songCover} alt="" className={maxSongCoverPicStyles} />:'loading'}
+      {songCover? <div className={detailsWrapper}>
         <h3 css={songTitleStyles}>{songTitle}</h3> 
         <p css={songTitleStyles}>{artistName}</p> 
 
