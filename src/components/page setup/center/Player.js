@@ -28,21 +28,23 @@ const bp = facepaint([
 
  
 
-  let songCover, songTitle,songDuration, artistName="";
+  let songCover, songTitle, artistName="";
+  let songDuration="0:00";
+  
   if(isAPlaylist && Object.keys(playingPlaylist).length!==0){
     songCover=playingPlaylist.tracks.data[songIndex].album['cover_big'];
     songTitle=playingPlaylist.tracks.data[songIndex].title;
-    songDuration=playingPlaylist.tracks.data[songIndex].duration;
+    songDuration=`${Math.floor(playingPlaylist.tracks.data[songIndex].duration /60)+":"+Math.ceil(playingPlaylist.tracks.data[songIndex].duration%60)}`;
     artistName=playingPlaylist.tracks.data[songIndex].artist['name'];
   }else if(isAnAlbum && Object.keys(playingPlaylist).length!==0){
     songCover=playingPlaylist.cover_big;
     songTitle=playingPlaylist.tracks.data[songIndex].title;
-    songDuration=playingPlaylist.tracks.data[songIndex].duration;
+    songDuration=`${Math.floor(playingPlaylist.tracks.data[songIndex].duration /60)+":"+Math.ceil(playingPlaylist.tracks.data[songIndex].duration%60)}`;
     artistName=playingPlaylist.tracks.data[songIndex].artist['name'];
   }else{
-    console.log("song cover not loaded");
+    console.log("loading");
   }
- 
+
 
   const playSong = (e) => {
     e.stopPropagation();
@@ -205,7 +207,9 @@ const bp = facepaint([
         fontSize="0.8rem" color="#D5EAF2">
           <p id="curreSongPostion" >0:00</p> 
           <input type="range" min="0"  max="100" step="1" id="songSlider" />
-          <p id="songDuration">{songDuration}</p>
+          <p id="songDuration">
+             {songDuration}
+          </p>
         </Wrapper>
       
          

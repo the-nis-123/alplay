@@ -49,10 +49,6 @@ function App() {
       console.error(error);
     })
   }, [playlist]);
-
-  
-  
-  
   
   return (
     <>
