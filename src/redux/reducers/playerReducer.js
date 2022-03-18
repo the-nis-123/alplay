@@ -9,7 +9,7 @@ audioTrack = document.createElement('audio');
 
 const playerReducer = (state = initialAppState,action) => {
   let trackIndex = state.songIndex;
-  let songs = state.playingPlaylist.tracks.data;
+  const songs = Object.keys(state.playingPlaylist).length!==0 ? state.playingPlaylist.tracks.data:"";
   
   
   switch (action.type) {
@@ -44,11 +44,10 @@ const playerReducer = (state = initialAppState,action) => {
         isPlaying:true,
         isAplaylist:true,
         isAnAlbum:false,
-        songTitle:"",
-        songDuration:"",
-        artistName:"", 
-        cover:"",
-        songCover:""
+        songIndex:0,
+        songTitle:action.payload.pla.tracks.data[0].title,
+        songDuration:action.payload.pla.tracks.data[0].duration,
+        artistName:action.payload.pla.tracks.data[0].artist['name'], 
       }
 
     case 'LOAD_AND_PLAY_THIS_ALBUM':
@@ -62,11 +61,10 @@ const playerReducer = (state = initialAppState,action) => {
         isPlaying:true,
         isAplaylist:false,
         isAnAlbum:true,
-        songTitle:"",
-        songDuration:"",
-        artistName:"", 
-        cover:"",
-        songCover:""
+        songTitle:action.payload.pla.tracks.data[0].title,
+        songDuration:action.payload.pla.tracks.data[0].duration,
+        artistName:action.payload.pla.tracks.data[0].artist['name'], 
+        songIndex:0
       }
       
     case 'PLAY_NEXT_SONG':

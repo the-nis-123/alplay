@@ -1,4 +1,5 @@
 /**@jsxImportSource @emotion/react */
+import Wrapper from "../../global components/Wrapper";
 import {IoMdPause, IoMdPlay,IoMdSkipBackward, IoMdSkipForward} from "react-icons/io";
 import { useDispatch, useSelector} from "react-redux";
 import * as playerActions from "../../../redux/actions/playerActions";
@@ -8,7 +9,6 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { css } from "@emotion/css";
 import facepaint from "facepaint";
-import Wrapper from "../../global components/Wrapper";
 
 const Player = () => {
 
@@ -18,32 +18,65 @@ const Player = () => {
     '@media(min-width: 1000px)'
   ]);
 
-const [playlist, setPlaylist] = useState({});    
+const [playlist, setPlaylist] = useState({});
+const [albumObject, setAlbumObject] = useState({});
+const [songTitle, setSongTitle] = useState('');  
+const [songCover, setSongCover] = useState('');  
+const [artistName, setArtistName] = useState('');
+const [songDuration, setSongDuration] = useState('');
+const [songIndex, setSongIndex] = useState(0);      
 
- const {
-    songTitle, songIndex, songDuration, isPlaying,
-    playlistIDfromUser, volumeOn,
-    artistName, playingPlaylist, isAnAlbum,isAPlaylist 
-  } = useSelector(state=>state.playerReducer);
-
- // const songCover= isAPlaylist && Object.keys(playingPlaylist) !== 0 ? playingPlaylist.tracks.data[songIndex].cover:playingPlaylist.cover;
-
+let {isAnAlbum, isAPlaylist, playlistIDfromUser, volumeOn} = useSelector(state => state.playerReducer); 
 useEffect( () => {
-  const options = {
-  method: 'GET',
-  url: `https://deezerdevs-deezer.p.rapidapi.com/playlist/${playlistIDfromUser}`,
-  headers: {
-    'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
-    'x-rapidapi-key': '2ce6541653msh6b3fb4d89eb2d48p1bcea1jsn8ce75a4064a4'
-  }
-  };
+  if(!isAnAlbum && isAPlaylist){
+     const options = {
+      method: 'GET',
+      url: `https://deezerdevs-deezer.p.rapidapi.com/playlist/${playlistIDfromUser}`,
+      headers: {
+        'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
+        'x-rapidapi-key': '2ce6541653msh6b3fb4d89eb2d48p1bcea1jsn8ce75a4064a4'
+      }
+    };
 
-  axios.request(options).then(function (response) {
-    let returnedPlaylist = response.data;
-    setPlaylist(returnedPlaylist);
-  }).catch(function (error) {
-    console.error(error);
-  })
+    axios.request(options).then(function (response) {
+      let returnedPlaylist = response.data;
+      let songslist = returnedPlaylist.tracks.data;
+      setPlaylist(songslist);
+      setSongCover(songslist[0].album['cover']);
+      setSongDuration(songslist[0].duration);
+      setSongTitle(songslist[0].title);
+      setArtistName(songslist[0].artist['name']);
+    }).catch(function (error) {
+      console.error(error);
+    })
+
+  }else if(!isAPlaylist && isAnAlbum){
+      const options = {
+      method: 'GET',
+      url: `https://deezerdevs-deezer.p.rapidapi.com/album/${playlistIDfromUser}`,
+      headers: {
+        'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
+        'x-rapidapi-key': '2ce6541653msh6b3fb4d89eb2d48p1bcea1jsn8ce75a4064a4'
+      }
+    };
+
+    axios.request(options).then(function (response) {
+      let returnedAlbum = response.data;
+      const songslist = returnedAlbum.tracks.data;
+      setAlbumObject(returnedAlbum);
+      setPlaylist(songslist);
+      setSongCover(returnedAlbum.cover);
+      setSongDuration(songslist[0].duration);
+      setSongTitle(songslist[0].title);
+      setArtistName(songslist[0].artist['name']);
+    }).catch(function (error) {
+      console.error(error);
+    })
+
+  }else{
+    console.log('playlist not found');
+  }
+
 }, [playlistIDfromUser, isAnAlbum, isAPlaylist]);
 
 
@@ -64,49 +97,39 @@ useEffect( () => {
     dispatch(playerActions.unmuteSong());
   }
 
-  const activeSong = (e) => {
-    e.stopPropagation();
-    dispatch(playerActions.showActiveSong());
-  }
-
   const pauseSong = (e)=>{
     e.stopPropagation();
     dispatch(playerActions.pauseButtonPressed());
   }
 
- 
-  const  nextSong = (e)=>{
+  const nextSong = (e)=>{
     e.stopPropagation();
     if(songIndex === playlist.length - 1 && isAPlaylist){
       setSongIndex(0);
-      setSongCover(playlist.tracks.data[songIndex].album['cover']);
-      setCover(playlist.tracks.data[songIndex].album['cover_big']);
-      setSongDuration(playlist.tracks.data[songIndex].duration);
-      setSongTitle(playlist.tracks.data[songIndex].title);
-      setArtistName(playlist.tracks.data[songIndex].artist['name']);
+      setSongCover(playlist[songIndex].album['cover']);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
     }
     else if(songIndex < playlist.length - 1 && isAPlaylist){
       setSongIndex(songIndex + 1);
-      setSongCover(playlist.tracks.data[songIndex].album['cover']);
-      setCover(playlist.tracks.data[songIndex].album['cover_big']);
-      setSongDuration(playlist.tracks.data[songIndex].duration);
-      setSongTitle(playlist.tracks.data[songIndex].title);
-      setArtistName(playlist.tracks.data[songIndex].artist['name']);
+      setSongCover(playlist[songIndex].album['cover']);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
     }
     else if(songIndex === playlist.length - 1 && isAnAlbum){
       setSongIndex(0);
-      setSongCover(playlist.cover);
-      setCover(playlist.cover_big);
-      setSongDuration(playlist.tracks.data[songIndex].duration);
-      setSongTitle(playlist.tracks.data[songIndex].title);
-      setArtistName(playlist.tracks.data[songIndex].artist['name']);
+      setSongCover(albumObject.cover);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
     }else{
       setSongIndex(songIndex + 1);
-      setSongCover(playlist.cover);
-      setCover(playlist.cover_big);
-      setSongDuration(playlist.tracks.data[songIndex].duration);
-      setSongTitle(playlist.tracks.data[songIndex].title);
-      setArtistName(playlist.tracks.data[songIndex].artist['name']);
+      setSongCover(albumObject.cover);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
     }
     dispatch(playerActions.nextSongButtonPressed(playlist, songIndex));
   }
@@ -117,34 +140,29 @@ useEffect( () => {
     if(songIndex > 0 && isAPlaylist){
       setSongIndex(songIndex - 1);
       setSongCover(playlist[songIndex].album['cover']);
-      setSongCover(playlist.tracks.data[songIndex].album['cover']);
-      setCover(playlist.tracks.data[songIndex].album['cover_big']);
-      setSongDuration(playlist.tracks.data[songIndex].duration);
-      setSongTitle(playlist.tracks.data[songIndex].title);
-      setArtistName(playlist.tracks.data[songIndex].artist['name']);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
     }
     else if(songIndex === 0 && isAPlaylist){
       setSongIndex(playlist.length - 1);
-      setSongCover(playlist.tracks.data[songIndex].album['cover']);
-      setCover(playlist.tracks.data[songIndex].album['cover_big']);
-      setSongDuration(playlist.tracks.data[songIndex].duration);
-      setSongTitle(playlist.tracks.data[songIndex].title);
-      setArtistName(playlist.tracks.data[songIndex].artist['name']);
+      setSongCover(playlist[songIndex].album['cover']);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
     }
     else if(songIndex > 0 && isAnAlbum){
       setSongIndex(songIndex - 1);
-      setSongCover(playlist.cover);
-      setCover(playlist.cover_big);
-      setSongDuration(playlist.tracks.data[songIndex].duration);
-      setSongTitle(playlist.tracks.data[songIndex].title);
-      setArtistName(playlist.tracks.data[songIndex].artist['name']);
+      setSongCover(albumObject.cover);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
     }else{
       setSongIndex(playlist.length - 1);
-      setSongCover(playlist.cover);
-      setCover(playlist.cover_big);
-      setSongDuration(playlist.tracks.data[songIndex].duration);
-      setSongTitle(playlist.tracks.data[songIndex].title);
-      setArtistName(playlist.tracks.data[songIndex].artist['name']);
+      setSongCover(albumObject.cover);
+      setSongDuration(playlist[songIndex].duration);
+      setSongTitle(playlist[songIndex].title);
+      setArtistName(playlist[songIndex].artist['name']);
     }
 
     if(songIndex > 0){
@@ -156,15 +174,10 @@ useEffect( () => {
      dispatch(playerActions.previousSongButtonPressed(playlist, songIndex));
   }
 
+  
+  const {isPlaying} = useSelector( state => state.playerReducer );
+
   //Player Stylings
-  const wrapperStyles = css(bp({
-    width:"100%",
-    height:"80px",
-    padding:"0 10px",
-    display:"flex",
-    justifyContent:"space-evenly",
-    alignItems:"center"  
-  }))
   const playerIconStyles = {
     width:'18px',
     height:'18px',
@@ -235,9 +248,9 @@ useEffect( () => {
     height:"100%",
     padding:"10px 20px",
     display:["none","flex","flex"],
-    justifyContent:"space-between",
+    justifyContent:"space-evenly",
     alignItems:"center",
-    flexDirection:"column"
+    flexDirection:"column",
   }))
 
    const volumeStyles = css(bp({
@@ -251,8 +264,10 @@ useEffect( () => {
 
 
   return (
-    <div className={wrapperStyles} onClick={activeSong}> 
-     
+    <Wrapper width="100%" height ="80px"  padding="0 10px"
+    display="flex" justifyContent="space-evenly" alignItems="center"  
+    > 
+      
       <div className={playingSong}>
         <Wrapper width="60%">
           {songCover? <img src={songCover} alt="" css={songCoverPicStyles} />:''}
@@ -262,14 +277,14 @@ useEffect( () => {
           </Wrapper>
         </Wrapper>
 
-        {<Wrapper width="40%" display="flex" justifyContent="center" alignItems="center">  
+        {songCover?<Wrapper width="40%" display="flex" justifyContent="center" alignItems="center">  
           <MdOutlineFavorite css={playerIconStyles}  />
           
           <div className={mobilePlayWrapper} >
             {isPlaying && <IoMdPause className={mplayerIconStyles} onClick={pauseSong}/> }
             {!isPlaying && <IoMdPlay className={mplayerIconStyles} onClick={playSong}/> }  
           </div>
-        </Wrapper>}
+        </Wrapper>:""}
       </div>
           
        
@@ -284,12 +299,12 @@ useEffect( () => {
       
          
         <Wrapper display="flex" justifyContent="center" alignItems="center">  
-          <IoMdSkipBackward css={playerIconStyles} />
+          <IoMdSkipBackward css={playerIconStyles} onClick={previousSong} />
           <div css={playButtonWrapper} >
             {isPlaying && <IoMdPause css={playerIconStyles} onClick={pauseSong}/> }
             {!isPlaying && <IoMdPlay css={playerIconStyles} onClick={playSong}/> }  
           </div>
-          <IoMdSkipForward css={playerIconStyles} />
+          <IoMdSkipForward css={playerIconStyles} onClick={nextSong} />
         </Wrapper>
       </div>  
 
@@ -301,7 +316,7 @@ useEffect( () => {
 
         <input type="range" min="0" max="100" step="1" id="volumeSlider" className={playingSong}/>
       </div>
-    </div>
+    </Wrapper>
   )
 }
 

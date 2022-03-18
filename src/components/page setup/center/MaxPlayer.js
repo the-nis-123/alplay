@@ -56,12 +56,12 @@ const MAxPlayer = () => {
 
   const  nextSong = (e)=>{
     e.stopPropagation();
-    dispatch(playerActions.playNextSong());
+    dispatch(playerActions.nextSongButtonPressed());
   }
 
   const previousSong = (e) => {
     e.stopPropagation();
-    dispatch(playerActions.playPreviousSong());
+    dispatch(playerActions.previousSongButtonPressed());
   }
 
    const close = (e) => {

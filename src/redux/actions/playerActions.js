@@ -16,13 +16,13 @@ export const playButtonPressed = (playlist, songIndex) =>{
 }
 
 
-export const playNextSong  = () =>{
+export const nextSongButtonPressed  = () =>{
   return{
     type:"PLAY_NEXT_SONG",
   }
 }
 
-export const playPreviousSong = () =>{
+export const previousSongButtonPressed = () =>{
    return{
     type:"PLAY_PREVIOUS_SONG"
   }
